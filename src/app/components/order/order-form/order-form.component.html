@@ -1,0 +1,66 @@
+<div class="my-section">
+  <div *ngIf="waiting" class="loader">Loading...</div>
+
+  <!-- <section
+  fxLayout="row"
+  fxLayoutAlign="center"
+  *ngIf="!waiting"> -->
+  <!-- <div class="wrap"> -->
+  <mat-card>
+    <form [formGroup]="orderInfoForm" fxLayout="column" fxLayoutAlign="center">
+
+      <mat-form-field>
+        <input type="text"
+          matInput
+          placeholder="NAAM"
+          formControlName="name"
+          #nameInput
+          (change)="orderInfoFormChanged()">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input type="text"
+          matInput placeholder="TELEFOONNUMMER (opt)"
+          formControlName="phone"
+          #phoneInput
+          (change)="orderInfoFormChanged()">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input
+          matInput [min]="minDate"
+          [max]="maxDate"
+          [matDatepickerFilter]="myDayFilter"
+          [matDatepicker]="picker"
+          placeholder="AFHAALDATUM"
+          formControlName="pickupDate"
+          (dateChange)="orderInfoFormChanged()">
+        <mat-datepicker-toggle matSuffix [for]="picker">
+          <mat-icon matDatepickerToggleIcon>
+            <span class="material-icons">
+              calendar_today
+            </span></mat-icon>
+        </mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>AFHAALTIJDSTIP</mat-label>
+        <mat-select
+          formControlName="pickupTime"
+          (selectionChange)="orderInfoFormChanged()">
+          <mat-option
+            *ngFor="let afhaalMoment of afhaalMomenten" [value]="afhaalMoment">
+            {{afhaalMoment}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button
+        mat-raised-button color="primary"
+        type="submit">
+        SUBMIT
+      </button>
+    </form>
+  </mat-card>
+</div>
+<!-- </section> -->

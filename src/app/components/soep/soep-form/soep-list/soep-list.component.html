@@ -1,0 +1,53 @@
+<div class="my-section">
+
+  <div
+    [formGroup]="form">
+    <div class="question-control-type" [ngSwitch]="question.controlType">
+      <!-- <input *ngSwitchCase="'textbox'" [formControlName]="question.key"
+          [id]="question.key" [type]="question.type"> -->
+      <div>
+        <!-- <mat-card-title>
+            <table> -->
+              <tr>
+        <td class="td-form-field">
+          <mat-form-field>
+            <mat-select
+              [id]="question.key"
+              *ngSwitchCase="'dropdown'"
+              [formControlName]="question.key"
+              (selectionChange)="change($event, question)">
+
+              <mat-option
+                *ngFor="let opt of question.options"
+                [value]="opt.key">
+                {{opt.value}}
+              </mat-option>
+
+            </mat-select>
+          </mat-form-field>
+        </td>
+        <!-- <label [attr.for]="question.key" fxFlex fxLayout="row" fxLayoutAlign=""> -->
+        <td class="td-question-name">
+          <span class="question-name">{{question.name}}</span>
+        </td>
+
+        <!-- <span fxFlex class="item-price" fxLayoutAlign="space-between"> -->
+        <td align="right" class="td-question-price">
+          <span class="question-price">{{question.price | currency:"EUR"}}</span>
+        </td>
+        <td align="right" class="td-question-total-price">
+          <span class="order-item-total-price"><b>{{orderItemCosts | currency:"EUR"}}</b></span>
+        </td>
+      </tr>
+        <!-- </span> -->
+        <!-- </label> -->
+        <!-- </table>
+          </mat-card-title> -->
+      </div>
+    </div>
+
+    <div class="errorMessage" *ngIf="!isValid">{{question.label}} is required</div>
+  </div>
+
+
+</div>
