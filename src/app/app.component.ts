@@ -3,6 +3,7 @@ import { Component }       from '@angular/core';
 import { QuestionService } from './question.service';
 import { QuestionBase }    from './form-stuff/question-base';
 import { Observable }      from 'rxjs';
+import { CoursesService } from './components/courses/courses.service';
 
 @Component({
   selector: 'app-root',
@@ -15,8 +16,11 @@ import { Observable }      from 'rxjs';
 export class AppComponent {
   questions$: Observable<QuestionBase<any>[]>;
 
-  constructor(service: QuestionService) {
-    this.questions$ = service.getQuestions();
+  constructor(
+    service: QuestionService,
+    private coursesService: CoursesService) {
+
+    this.questions$ = service.getQuestions()
   }
 }
 

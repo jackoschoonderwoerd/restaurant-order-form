@@ -7,8 +7,10 @@ import { ActivatedRoute } from '@angular/router';
 import { OrderItem } from 'src/app/models/order-item.model';
 import { OrderedItem } from 'src/app/models/ordered-item.model';
 import { NewOrderedItem } from 'src/app/models/new-ordered-item.model';
-
 import { Menu } from 'src/app/models/menu.model';
+import { MenuService } from 'src/app/services/menu.service';
+
+
 
 
 @Injectable({
@@ -16,51 +18,51 @@ import { Menu } from 'src/app/models/menu.model';
 })
 export class CoursesService {
 
+  
+
   courseAmount: number = 0;
   courseTotalChanged = new EventEmitter<number>();
   orderedItems = [];
-  
+  menu;  
 
-  bogusMenu = new Menu([
-    new Course('zoet', [
-      new CourseItem('ijs', 1),
-      new CourseItem('cake', 2.5)
-    ]),
-    new Course('fris', [
-      new CourseItem('cola', 1)
-    ])
-  ]);
+  // bogusMenu = new Menu([
+  //   new Course('zoet', [
+  //     new CourseItem('ijs', 1),
+  //     new CourseItem('cake', 2.5)
+  //   ]),
+  //   new Course('fris', [
+  //     new CourseItem('cola', 1)
+  //   ])
+  // ]);
 
-  cencMenu = new Menu([
-    new Course('soep', [
-      new CourseItem('broccoli', 11.25),
-      new CourseItem('prei', 30.50),
-    ]),
-    new Course('borrelhapjes', [
-      new CourseItem('bitterballen', 1.10),
-      new CourseItem('kaasstengels', 1.75)
-    ])
-  ])
+  // cencMenu = new Menu([
+  //   new Course('soep', [
+  //     new CourseItem('broccoli', 11.25),
+  //     new CourseItem('prei', 30.50),
+  //   ]),
+  //   new Course('borrelhapjes', [
+  //     new CourseItem('bitterballen', 1.10),
+  //     new CourseItem('kaasstengels', 1.75)
+  //   ])
+  // ]);
 
   courseNames: string[] = []
 
-  constructor() { }
+  constructor(private menuService: MenuService) { }
 
-  getMenu() {
-    return this.cencMenu;
+  getMenu(cenc) {
+    // call from app.component.ts
+    this.menu = this.menuService.getMenu('cenc');
+    console.log(this.menu);
   }
 
   getCourse(courseName):Course[] {
-    // console.log(this.cencMenu);
-    this.bogusMenu.courses.forEach(course => {
-      // console.log(course);
+    this.menu.courses.forEach(course => {
     })
     if ((JSON.parse(localStorage.getItem('order')))) {
       const storedMenu = (JSON.parse(localStorage.getItem('order')))
-      // console.log('storedMenu: ', storedMenu)
     }
-    // console.log('this.cencMenu: ', this.cencMenu);
-    const selectedCourse = this.cencMenu.courses.filter((course) => {
+    const selectedCourse = this.menu.courses.filter((course) => {
       return course.courseName === courseName;
     })
     console.log(selectedCourse);

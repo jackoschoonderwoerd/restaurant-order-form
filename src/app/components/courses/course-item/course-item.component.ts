@@ -20,7 +20,7 @@ export class CourseItemComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private coursesService: CoursesService
+    private coursesService: CoursesService,
     ) {}
 
   ngOnInit(): void {
@@ -29,6 +29,9 @@ export class CourseItemComponent implements OnInit {
     });
     this.itemOrderForm.controls['amount'].setValue(this.courseItem.amount, {onSelf: true});
     this.courseItemTotal = this.calculateCourseItemTotal();
+    setTimeout(() => {
+      this.coursesService.calculateCourseTotal(this.courseName);
+    });
   }
 
   onChange(e) {
@@ -37,6 +40,7 @@ export class CourseItemComponent implements OnInit {
     this.coursesService.addOrUpdateOrder(this.courseName, this.courseItem)
   }
   calculateCourseItemTotal() {
+    console.log('calculateCourseItemTotal() called')
     return this.courseItem.price * this.courseItem.amount;
   }
 }
