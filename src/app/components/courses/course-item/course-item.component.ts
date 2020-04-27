@@ -12,7 +12,7 @@ export class CourseItemComponent implements OnInit {
 
   @Input() courseName;
   @Input() courseItem;
-  options: number[] = [1, 2, 3];
+  options: number[] = [0, 1, 2, 3];
   default: number = 2;
   courseItemTotal: number = 0;
   itemOrderForm: FormGroup

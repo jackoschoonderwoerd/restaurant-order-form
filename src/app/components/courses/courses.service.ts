@@ -49,9 +49,10 @@ export class CoursesService {
   getMenu() {
     return this.cencMenu;
   }
-  getCourse(courseName) {
+
+  getCourse(courseName):Course[] {
     // console.log(this.cencMenu);
-    this.cencMenu.courses.forEach(course => {
+    this.bogusMenu.courses.forEach(course => {
       // console.log(course);
     })
     if ((JSON.parse(localStorage.getItem('order')))) {
@@ -62,6 +63,7 @@ export class CoursesService {
     const selectedCourse = this.cencMenu.courses.filter((course) => {
       return course.courseName === courseName;
     })
+    console.log(selectedCourse);
     return selectedCourse;
   }
 
@@ -82,29 +84,14 @@ export class CoursesService {
   }
 
   calculateCourseTotal(courseName) {
-    const courseItems = []
-    this.cencMenu.courses.forEach(course => {
-      if(course.courseName === courseName) {
-        courseItems.push(course.courseItems);
+    let courseTotal: number = 0;
+    const courseArray: Course[] = this.getCourse(courseName)
+    const course = courseArray[0];
+    course.courseItems.forEach(courseItem => {
+      if(courseItem.amount !== undefined) {
+        courseTotal = courseTotal + courseItem.price * courseItem.amount
       }
-      console.log(courseItems);
     })
-    let courseTotal: number = 0
-    this.orderedItems.forEach((orderedItem) => {
-      console.log(orderedItem.courseItemAmount);
-        courseItems.forEach(courseItem => {
-          console.log(courseItem);
-          if(orderedItem.name === courseItem.name) {
-            courseTotal = courseTotal + orderedItem.courseItemAmount * courseItem.price; 
-          }
-        })
-      });
-      // if(orderedItem.courseName === courseName) {
-      //   const orderItemTotal = orderedItem.courseItem.price * orderedItem.courseItem.amount;
-      //   courseTotal = courseTotal + orderItemTotal
-      // }
-    
-    console.log(courseTotal);
     this.courseTotalChanged.emit(courseTotal);
   }
 }
