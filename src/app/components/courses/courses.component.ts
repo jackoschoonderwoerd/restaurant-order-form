@@ -30,8 +30,10 @@ export class CoursesComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.coursesService.getMenu('cenc');
     this.cdr.detectChanges()
     const courseName = this.route.snapshot.params['courseName']
+    console.log(courseName);
     this.course = this.coursesService.getCourse(courseName)[0];
     this.courseName = this.course['courseName'];
     this.courseItems = this.course['courseItems']
@@ -41,5 +43,4 @@ export class CoursesComponent implements OnInit {
       })
     );
   }
-
 }

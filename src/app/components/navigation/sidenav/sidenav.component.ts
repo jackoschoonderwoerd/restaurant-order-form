@@ -3,6 +3,7 @@ import { Course } from 'src/app/models/course.model';
 import { CoursesService } from '../../courses/courses.service';
 import { Menu } from 'src/app/models/menu.model';
 import { Router, NavigationEnd } from '@angular/router';
+import { MenuService } from 'src/app/services/menu.service';
 
 @Component({
   selector: 'app-sidenav',
@@ -21,8 +22,10 @@ export class SidenavComponent implements OnInit, OnDestroy {
 
   constructor(
     private coursesService: CoursesService,
-    private router: Router,) {
+    private router: Router,
+    private menuService: MenuService) {
 
+    // select a different course => reinitailze component without refreshing
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
     };
@@ -35,11 +38,7 @@ export class SidenavComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.menu = this.coursesService.getMenu()
-    this.menu.courses.forEach((course: Course) => {
-      const courseName = (course.courseName);
-      this.courseNames.push(courseName);
-    });
+    this.courseNames = this.menuService.getCourseList('companyName')
   }
   onSidenavToggle() {
     this.sidenavToggle.emit();
