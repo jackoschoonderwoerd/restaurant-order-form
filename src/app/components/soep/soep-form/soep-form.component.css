@@ -1,0 +1,16 @@
+.fixed{
+    table-layout: fixed;
+    width: 283px;
+}
+.fixed td {
+    overflow: hidden;
+}
+.title {
+    background-color: pink;
+    padding-left: 18px;
+}
+
+mat-card-title {
+    font-size: 16px;
+}
+

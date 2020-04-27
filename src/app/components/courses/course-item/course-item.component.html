@@ -1,0 +1,24 @@
+<div class="my-section">
+  <table class="fixed-table">
+    <tr>
+      <td class="item-select">
+        <form [formGroup]="itemOrderForm">
+            <select
+              id="country"
+              formControlName="amount" 
+              (change)="onChange($event)">
+              <option
+                *ngFor="let option of options" 
+                [value]="option">
+                {{option}}
+              </option>
+            </select>
+        </form>
+      </td>
+      <td class="item-name">{{courseItem.name}}</td>
+      <td class="item-price" align="right">{{courseItem.price | currency:"EUR"}}</td>
+      <td class="item-total" align="right">{{courseItemTotal | currency:"EUR"}}</td>
+    </tr>
+  </table>
+  <!-- {{itemName}} - {{itemPrice}} -->
+</div>

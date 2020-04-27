@@ -1,1 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.my-section {
+    background-color: lightblue;
+    max-width: 450px;
+}
+
+mat-card {
+    /* width: 100%; */
+    /* max-width: 440px; */
+    width: 316px;
+    margin-right: 2px;
+    margin-left: 2px;
+    margin-bottom: 2px;
+}
+
+.fixed-table{
+    table-layout: fixed;
+    width: 283px;
+}

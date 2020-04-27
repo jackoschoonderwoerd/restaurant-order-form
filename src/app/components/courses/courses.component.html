@@ -1,0 +1,20 @@
+
+<div class="my-section">
+    <div class="card-container">
+        <div class="course-name-container">
+            <h3>{{courseName}}</h3>
+        </div>
+        <mat-card>
+            <div *ngFor="let courseItem of courseItems" class="course-item">
+                <app-course-item
+                    [courseItem]="courseItem" 
+                    [courseName]="courseName">
+                </app-course-item>
+            </div>
+            <table class="fixed-table">
+                <td class="first-column">Total</td>
+                <td align="right" class="second-column">{{courseTotal | currency:"EUR"}}</td>
+            </table>
+        </mat-card>
+    </div>
+</div>

@@ -1,0 +1,13 @@
+.course-name {
+    font-size: 18px;
+    margin-right: 10px;
+}
+.change-order-btn {
+    width: 40px;
+    border: 1px solid blue;
+    
+}
+
+td {
+    width: 25%
+}

@@ -1,0 +1,55 @@
+<div class="my-section">
+  <mat-card>
+    <div 
+      class="order-item-container"
+      *ngFor="let orderItem of orderItems">
+
+      <app-order-item-type [orderItem]="orderItem"></app-order-item-type>
+    </div>
+    <div fxLayout fxLayoutAlign="space-between">
+      <span class="course-name">{{itemType | titlecase}}</span>
+      <button
+        class="change-order-btn"
+        mat-raised-button color="primary"
+        (click)="editOrder('soep')">EDIT
+    </button>
+    </div>
+    <table>
+      <tr>
+        <td>ARTICLE</td>
+        <td align="right">PRICE</td>
+        <td align="right">AMOUNT</td>
+        <td align="right">TOTAL</td>
+      </tr>
+      <tr *ngFor="let soepOrder of soepOrders">
+        <td>{{soepOrder.name | titlecase}}</td>
+        <td align="right">{{soepOrder.price | currency:"EUR"}}</td>
+        <td align="right">{{soepOrder.quantity}}</td>
+        <td align="right"><b>{{soepOrder.price * soepOrder.quantity | currency:"EUR"}}</b></td>
+      </tr>
+
+      <tr>
+        <td>Totaal</td>
+        <td></td>
+        <td></td>
+        <td align="right"><b>{{totalItemPrice | currency:"EUR"}}</b></td>
+      </tr>
+    </table>
+  </mat-card>
+
+  <mat-card>
+    <div
+      class=""
+      *ngIf="finalPrice === 0">NOG NIETS GEKOZEN
+    </div>
+    <div
+        fxLayout fxLayoutAlign="space-between"
+        *ngIf="soepTotal !== 0">
+      <span>Totaal:</span><span><b>{{finalPrice | currency:"EUR"}}</b></span>
+    </div>
+  </mat-card>
+
+</div>
+<div class="section">
+    <app-order-form></app-order-form>
+</div>
