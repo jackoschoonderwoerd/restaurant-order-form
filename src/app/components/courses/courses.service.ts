@@ -55,6 +55,9 @@ export class CoursesService {
     this.menu = this.menuService.getMenu('cenc');
     console.log(this.menu);
   }
+  getOrderedItems() {
+    return this.orderedItems;
+  }
 
   getCourse(courseName):Course[] {
     this.menu.courses.forEach(course => {

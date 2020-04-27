@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SoepService } from '../soep/soep.service';
 import { OrderService } from './order.service';
 import { Router } from '@angular/router';
+import { CoursesService } from '../courses/courses.service';
 
 @Component({
   selector: 'app-order',
@@ -9,7 +10,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./order.component.css']
 })
 export class OrderComponent implements OnInit {
-
+  courses;
+  orderedItems;
   soepOrders;
   itemOrders;
   itemType;
@@ -18,6 +20,7 @@ export class OrderComponent implements OnInit {
   constructor(
     private soepService: SoepService,
     private orderService: OrderService,
+    private coursesService: CoursesService,
     private router: Router) { }
   
   orderItems = [
@@ -28,19 +31,23 @@ export class OrderComponent implements OnInit {
   finalPrice: number = 0;
 
   ngOnInit(): void {
-    
-    this.orderService.getItemOrders();
-    this.soepOrders = this.soepService.getCourseOrders().courseOrders;
-    this.itemType = this.soepService.getCourseOrders().itemType;
-    this.calculateTotalItemPrice();
+    this.courses = this.coursesService.getMenu('companyName');
+    console.log(this.courses);
+    this.orderItems = this.coursesService.getOrderedItems();
+    console.log(this.orderItems);
+
+    // this.orderService.getItemOrders();
+    // this.soepOrders = this.soepService.getCourseOrders().courseOrders;
+    // this.itemType = this.soepService.getCourseOrders().itemType;
+    // this.calculateTotalItemPrice();
   }
   editOrder(itemType) {
-    console.log(itemType);
-    this.router.navigate([itemType]);
+    // console.log(itemType);
+    // this.router.navigate([itemType]);
   }
   calculateTotalItemPrice() {
-    this.soepOrders.forEach(soepOrder => {
-      this.totalItemPrice = this.totalItemPrice + soepOrder.price * soepOrder.quantity;
-    })
+    // this.soepOrders.forEach(soepOrder => {
+    //   this.totalItemPrice = this.totalItemPrice + soepOrder.price * soepOrder.quantity;
+    // })
   }
 }
