@@ -1,6 +1,6 @@
-import { BrowserModule }                from '@angular/platform-browser';
-import { ReactiveFormsModule }          from '@angular/forms';
-import { NgModule }                     from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { ReactiveFormsModule } from '@angular/forms';
+import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { MaterialModule } from './material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -9,7 +9,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 
 // import { DynamicFormQuestionComponent } from './dynamic-form-question/dynamic-form-question.component';
 // import { DynamicFormComponent } from './dynamic-form/dynamic-form.component';
-import { AppComponent }                 from './app.component';
+import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { HeaderComponent } from './components/navigation/header/header.component';
 import { SidenavComponent } from './components/navigation/sidenav/sidenav.component';
@@ -25,42 +25,47 @@ import { ContinueOrderingComponent } from './components/dialogs/continue-orderin
 import { OrderFormComponent } from './components/order/order-form/order-form.component';
 import { FinalizeErrorDialogComponent } from './components/order/finalize-error-dialog/finalize-error-dialog.component';
 import { FinalizeOrderDialogComponent } from './components/order/finalize-order-dialog/finalize-order-dialog.component';
-import { OrderItemTypeComponent } from './components/order/order-form/order-item-type/order-item-type.component';
+
 import { CoursesComponent } from './components/courses/courses.component';
 import { CourseItemComponent } from './components/courses/course-item/course-item.component';
+import { OrderCourseComponent } from './components/order/order-course/order-course.component';
+import { AddFinalizeComponent } from './components/courses/add-finalize/add-finalize.component';
+
 
 
 @NgModule({
-  imports: [ 
-    BrowserModule, 
-    ReactiveFormsModule, 
+  imports: [
+    BrowserModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
     AppRoutingModule,
     MaterialModule
   ],
-  declarations: [ 
+  declarations: [
     AppComponent,
     // DynamicFormComponent,
     // DynamicFormQuestionComponent,
     HomeComponent,
     HeaderComponent,
-    SidenavComponent, 
+    SidenavComponent,
     SoepListComponent,
-    SoepFormComponent, 
-    TestComponent, 
-    OrderComponent, 
+    SoepFormComponent,
+    TestComponent,
+    OrderComponent,
     AddToOrderComponent,
     ContinueOrderingComponent,
     OrderFormComponent,
     FinalizeErrorDialogComponent,
     FinalizeOrderDialogComponent,
-    OrderItemTypeComponent,
     CoursesComponent,
-    CourseItemComponent
+    CourseItemComponent,
+    OrderCourseComponent,
+    AddFinalizeComponent,
+
   ],
   providers: [QuestionControlService],
-  bootstrap: [ AppComponent ],
+  bootstrap: [AppComponent],
   entryComponents: [
     AddToOrderComponent,
     ContinueOrderingComponent

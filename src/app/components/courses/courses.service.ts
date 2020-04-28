@@ -23,28 +23,8 @@ export class CoursesService {
   courseAmount: number = 0;
   courseTotalChanged = new EventEmitter<number>();
   orderedItems = [];
+  
   menu;  
-
-  // bogusMenu = new Menu([
-  //   new Course('zoet', [
-  //     new CourseItem('ijs', 1),
-  //     new CourseItem('cake', 2.5)
-  //   ]),
-  //   new Course('fris', [
-  //     new CourseItem('cola', 1)
-  //   ])
-  // ]);
-
-  // cencMenu = new Menu([
-  //   new Course('soep', [
-  //     new CourseItem('broccoli', 11.25),
-  //     new CourseItem('prei', 30.50),
-  //   ]),
-  //   new Course('borrelhapjes', [
-  //     new CourseItem('bitterballen', 1.10),
-  //     new CourseItem('kaasstengels', 1.75)
-  //   ])
-  // ]);
 
   courseNames: string[] = []
 
@@ -67,6 +47,15 @@ export class CoursesService {
       });
     }
     return this.menu;
+  }
+
+  getCourseNames() {
+    if(this.courseNames = []) {
+      this.menu.courses.forEach(course => {
+        this.courseNames.push(course.courseName)
+      });
+    }
+    return this.courseNames
   }
 
   getOrderedItems() {
@@ -123,6 +112,32 @@ export class CoursesService {
       }
     })
     this.courseTotalChanged.emit(courseTotal);
+  }
+  calculateOrderTotal() {
+    let total = 0
+    const menu = this.getMenu('');
+    console.log(menu);
+    if(localStorage.getItem('orderedItems')) {
+      const orderedItems = JSON.parse(localStorage.getItem('orderedItems'));
+      console.log(orderedItems);
+      menu.courses.forEach(course => {
+        const courseItems = course.courseItems
+        console.log(courseItems);
+        courseItems.forEach(courseItem => {
+          orderedItems.forEach(orderedItem => {
+            console.log(courseItem.name, orderedItem.courseItemName);
+            if(courseItem.name === orderedItem.courseItemName) {
+              console.log(courseItem.price, orderedItem.amount);
+              const subTotal = courseItem.price * orderedItem.courseItemAmount;
+              console.log(subTotal);
+              total = total + subTotal;
+            }
+          })
+        })
+      })
+    }
+    console.log(total)
+    return total;
   }
 }
 
