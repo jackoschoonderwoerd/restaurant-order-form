@@ -23,6 +23,9 @@ export class OrderComponent implements OnInit {
   soepTotal = 0;
   menu
   orderTotal;
+  orderTotalAfterDiscount;
+  maaltijdDeals;
+  discount;
   constructor(
     private soepService: SoepService,
     private orderService: OrderService,
@@ -40,33 +43,41 @@ export class OrderComponent implements OnInit {
 
   ngOnInit(): void {
     this.getOrderTotal();
+    this.getMaaltijdDeals();
     this.menu = this.coursesService.getMenu('companyName');
-    console.log(this.menu);
     this.menu.courses.forEach(course => {
       this.courses.push(course);
     })
-    console.log(this.courses);
-    // this.orderItems = this.coursesService.getOrderedItems();
-    // console.log(this.orderItems);
-
-
-    // this.orderService.getItemOrders();
-    // this.soepOrders = this.soepService.getCourseOrders().courseOrders;
-    // this.itemType = this.soepService.getCourseOrders().itemType;
-    // this.calculateTotalItemPrice();
   }
-  editOrder(itemType) {
-    // console.log(itemType);
-    // this.router.navigate([itemType]);
-  }
+
   getOrderTotal() {
     this.orderTotal = this.coursesService.calculateOrderTotal();
-    console.log(this.orderTotal);
-    // this.soepOrders.forEach(soepOrder => {
-    //   this.totalItemPrice = this.totalItemPrice + soepOrder.price * soepOrder.quantity;
-    // })
   }
+
   onOrderMore() {
     this.dialog.open(AddFinalizeComponent)
+  }
+  getMaaltijdDeals() {  //calculate discount
+    
+    const discountSum = 2; //euro
+    const orderedMeals = this.coursesService.orderedItemsCount('maaltijden');
+    console.log('orderedMeals: ', orderedMeals);
+    let orderedWine = this.coursesService.orderedItemsCount('wijn');
+    console.log('orderedWine: ', orderedWine)
+    
+    this.discount = 0
+    if (orderedMeals >= 2) {
+      const maxWines = orderedMeals / 2;
+      console.log('maxWines: ', maxWines)
+      if(orderedWine > maxWines) {
+        orderedWine = Math.floor(maxWines)
+        console.log('orderedWine: ', orderedWine)
+        this.discount = Math.floor(orderedWine) * discountSum;
+      }
+      // console.log('Math.floor(discount: ', Math.floor(discount))
+    } 
+    console.log('discount: ', this.discount)
+    return this.discount
+    // console.log(discountUnit);
   }
 }

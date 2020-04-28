@@ -24,6 +24,17 @@
         fxLayout fxLayoutAlign="space-between">
       <span>Totaal:</span><span><b>{{orderTotal | currency:"EUR"}}</b></span>
     </div>
+    <div class=""
+      *ngIf="discount !== 0"
+      fxLayout fxLayoutAlign="space-between">
+      <span>Korting Maaltijd deal</span><span><b>- {{discount | currency:"EUR"}}</b></span>
+    </div>
+    <div class=""
+      *ngIf="discount !== 0"
+      fxLayout fxLayoutAlign="space-between">
+      <span>Totaal</span>
+      <span><b>{{orderTotal - discount | currency:"EUR"}}</b></span>
+    </div>
   </mat-card>
 
 </div>
