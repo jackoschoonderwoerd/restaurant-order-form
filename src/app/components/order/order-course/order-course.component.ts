@@ -14,9 +14,14 @@ export class OrderCourseComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.course.courseItems.forEach(courseItem => {
+      console.log(courseItem.name);
+      console.log(courseItem.amount);
+      console.log(typeof(courseItem.amount));
+    })
   }
   onEdit(courseName) {
-    console.log(courseName);
+    // console.log(courseName);
     this.router.navigate(['/courses', {courseName: courseName}])
   }
 }

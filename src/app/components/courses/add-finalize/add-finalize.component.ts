@@ -18,7 +18,7 @@ export class AddFinalizeComponent implements OnInit {
 
   ngOnInit(): void {
     this.courseNames = this.coursesService.getCourseNames();
-    console.log(this.courseNames);
+    // console.log(this.courseNames);
   }
   onSelectCourse(courseName) {
     this.router.navigate(['/courses', {courseName: courseName}]);

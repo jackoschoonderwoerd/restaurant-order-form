@@ -116,28 +116,68 @@ export class CoursesService {
   calculateOrderTotal() {
     let total = 0
     const menu = this.getMenu('');
-    console.log(menu);
     if(localStorage.getItem('orderedItems')) {
       const orderedItems = JSON.parse(localStorage.getItem('orderedItems'));
-      console.log(orderedItems);
       menu.courses.forEach(course => {
         const courseItems = course.courseItems
-        console.log(courseItems);
         courseItems.forEach(courseItem => {
           orderedItems.forEach(orderedItem => {
-            console.log(courseItem.name, orderedItem.courseItemName);
             if(courseItem.name === orderedItem.courseItemName) {
-              console.log(courseItem.price, orderedItem.amount);
               const subTotal = courseItem.price * orderedItem.courseItemAmount;
-              console.log(subTotal);
               total = total + subTotal;
             }
           })
         })
       })
     }
-    console.log(total)
     return total;
   }
+
+  calculateWineBottles() {
+    let totalWijn = 0
+    const menu = this.getMenu('');
+    // if(localStorage.getItem('orderedItems')) {
+      menu.courses.forEach(course => {
+        if(course.courseName === 'wijn') {
+          const wijnCourse = course;
+          wijnCourse.courseItems.forEach(courseItem => {
+            totalWijn = totalWijn + +courseItem.amount;
+          }) 
+        }
+      })
+    // }
+    return totalWijn;
+  }
+  calculateMeals() {
+    let totalMeals = 0
+    const menu = this.getMenu('');
+    // if(localStorage.getItem('orderedItems')) {
+      menu.courses.forEach(course => {
+        if(course.courseName === 'maaltijden') {
+          const mealsCourse = course;
+          mealsCourse.courseItems.forEach(courseItem => {
+            totalMeals = totalMeals + +courseItem.amount;
+          }) 
+        }
+      })
+    // }
+    return totalMeals;
+  }
+  orderedItemsCount(courseName) {
+    let total = 0
+    const menu = this.getMenu('');
+    // if(localStorage.getItem('orderedItems')) {
+      menu.courses.forEach(course => {
+        if(course.courseName === courseName) {
+          const mealsCourse = course;
+          mealsCourse.courseItems.forEach(courseItem => {
+            total = total + +courseItem.amount;
+          }) 
+        }
+      })
+    // }
+    return total;
+  }
+  
 }
 
