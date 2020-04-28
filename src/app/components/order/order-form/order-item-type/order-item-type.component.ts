@@ -6,12 +6,12 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./order-item-type.component.css']
 })
 export class OrderItemTypeComponent implements OnInit {
-  @Input() orderItem;
+  @Input() course;
 
   constructor() { }
 
   ngOnInit(): void {
-    console.log(this.orderItem)
+    // console.log(this.orderItem)
   }
 
 }

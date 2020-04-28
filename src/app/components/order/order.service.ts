@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { SoepService } from '../soep/soep.service';
+import { CoursesService } from '../courses/courses.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +11,14 @@ export class OrderService {
   soepOrders;
 
   constructor(
-    private soepService: SoepService
+    private soepService: SoepService,
+    private coursesSevice: CoursesService
   ) { }
+
+  getMenu() {
+    console.log(this.coursesSevice.getMenu('cenc'));
+    return this.coursesSevice.getMenu('cenc')
+  }
 
   getQuestions() {
     const questions = this.soepService.getQuestions()

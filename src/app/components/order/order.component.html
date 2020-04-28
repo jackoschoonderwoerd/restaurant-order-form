@@ -2,9 +2,9 @@
   <mat-card>
     <div 
       class="order-item-container"
-      *ngFor="let orderItem of orderItems">
+      *ngFor="let course of courses">
 
-      <app-order-item-type [orderItem]="orderItem"></app-order-item-type>
+      <app-order-item-type [course]="course"></app-order-item-type>
     </div>
     <div fxLayout fxLayoutAlign="space-between">
       <span class="course-name">{{itemType | titlecase}}</span>
