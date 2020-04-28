@@ -7,6 +7,8 @@ import { CourseItem } from 'src/app/models/courseItem.model';
 import { FormGroup } from '@angular/forms';
 import { QuestionControlService } from 'src/app/form-stuff/question-control.service';
 import { QuestionBase } from 'src/app/form-stuff/question-base';
+import { MatDialog } from '@angular/material/dialog';
+import { AddFinalizeComponent } from './add-finalize/add-finalize.component';
 
 @Component({
   selector: 'app-courses',
@@ -19,7 +21,9 @@ export class CoursesComponent implements OnInit {
     private coursesService: CoursesService,
     private route: ActivatedRoute,
     private cdr: ChangeDetectorRef,
-    private qcs: QuestionControlService) { }
+    private qcs: QuestionControlService,
+    private dialog: MatDialog
+    ) { }
 
   course: Course;
   courseName: string;
@@ -30,6 +34,8 @@ export class CoursesComponent implements OnInit {
 
 
   ngOnInit(): void {
+    const myCourseName = this.route.snapshot.paramMap.get('courseName')
+    console.log(myCourseName);
     this.coursesService.getMenu('cenc');
     this.cdr.detectChanges()
     const courseName = this.route.snapshot.params['courseName']
@@ -41,5 +47,8 @@ export class CoursesComponent implements OnInit {
         this.courseTotal = courseTotal;
       })
     );
+  }
+  onAdd() {
+    this.dialog.open(AddFinalizeComponent)
   }
 }

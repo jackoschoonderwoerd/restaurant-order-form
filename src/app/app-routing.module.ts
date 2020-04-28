@@ -22,6 +22,7 @@ const routes: Routes = [
   { path: 'dynamic-form-question', component: DynamicFormQuestionComponent},
   { path: 'test', component: TestComponent },
   { path: 'order', component: OrderComponent },
+  { path: 'courses', component: CoursesComponent },
   { path: '**', component: HomeComponent },
 ];
 

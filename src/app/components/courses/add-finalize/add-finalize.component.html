@@ -1,0 +1,15 @@
+<p>add-finalize works!</p>
+<div *ngFor="let courseName of courseNames">
+  <button
+    mat-raised-button
+    color="primary"
+    mat-dialog-close
+    (click)="onSelectCourse(courseName)">{{courseName}}</button>
+</div>
+<div class="">
+  <button
+    mat-raised-button
+    color="primary"
+    mat-dialog-close
+    (click)="onFinalizeOrder()">FINALIZE</button>
+</div>

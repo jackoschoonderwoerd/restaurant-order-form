@@ -1,0 +1,24 @@
+.course-name {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+
+
+.course-item-name {
+  width: 138px
+}
+.course-item-price {
+  width: 60px
+}
+.course-item-amount {
+  width: 25px
+}
+
+.course-item-price-amount {
+  width: 60px
+}
+
+td {
+  /* outline: 1px solid black; */
+}

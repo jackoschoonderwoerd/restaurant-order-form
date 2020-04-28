@@ -1,0 +1,19 @@
+<div
+  class="course-name"
+  fxLayout fxLayoutAlign="space-between">
+  <span>
+    {{course.courseName}}
+  </span>
+  <button mat-raised-button color="primary" (click)="onEdit(course.courseName)">EDIT</button>
+</div>
+<table class="fixed-table">
+  <div *ngFor="let courseItem of course.courseItems">
+    <tr *ngIf="courseItem.price * courseItem.amount !== 0">
+      <td class="course-item-name">{{courseItem.name}}</td>
+      <td align="right" class="course-item-amount">{{courseItem.amount}}X</td>
+      <td align="right" class="course-item-price">{{courseItem.price | currency:"EUR"}}</td>
+      <td align="right" class="course-item-price-amount">{{courseItem.price * courseItem.amount | currency:"EUR"}}</td>
+    </tr>
+  </div>
+  <hr>
+</table>
