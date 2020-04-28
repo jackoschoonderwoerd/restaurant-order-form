@@ -37,10 +37,10 @@ export class CourseItemComponent implements OnInit {
   onChange(e) {
     this.courseItem.amount = e.target.value;
     this.courseItemTotal = this.courseItem.amount * this.courseItem.price;
-    this.coursesService.addOrUpdateOrder(this.courseName, this.courseItem)
+    this.coursesService.addOrUpdateOrderItem(this.courseName, this.courseItem)
   }
   calculateCourseItemTotal() {
-    console.log('calculateCourseItemTotal() called')
+    // console.log('calculateCourseItemTotal() called')
     return this.courseItem.price * this.courseItem.amount;
   }
 }

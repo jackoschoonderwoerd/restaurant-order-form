@@ -51,41 +51,66 @@ export class CoursesService {
   constructor(private menuService: MenuService) { }
 
   getMenu(cenc) {
-    // call from app.component.ts
+    // called by app.component.ts
     this.menu = this.menuService.getMenu('cenc');
-    console.log(this.menu);
+    if(localStorage.getItem('orderedItems')) {
+      this.orderedItems = JSON.parse(localStorage.getItem('orderedItems'));
+      this.menu.courses.forEach(course => {
+        const courseItem = course.courseItems;
+        courseItem.forEach(courseItem => {
+          this.orderedItems.forEach(orderedItem => {
+            if(courseItem.name === orderedItem.courseItemName){
+              courseItem.amount = orderedItem.courseItemAmount;
+            }
+          })
+        })
+      });
+    }
+    return this.menu;
   }
+
   getOrderedItems() {
+    if(localStorage.getItem('orderedItems')) {
+      this.orderedItems = JSON.parse(localStorage.getItem('orderedItems'));
+      // console.log(this.orderedItems);
+    }  else {
+      this.orderedItems = [];
+    }
+    // console.log('course.service:this.orderedItems: ', this.orderedItems);
     return this.orderedItems;
   }
 
   getCourse(courseName):Course[] {
-    this.menu.courses.forEach(course => {
-    })
-    if ((JSON.parse(localStorage.getItem('order')))) {
-      const storedMenu = (JSON.parse(localStorage.getItem('order')))
-    }
+
     const selectedCourse = this.menu.courses.filter((course) => {
       return course.courseName === courseName;
     })
-    console.log(selectedCourse);
+    // console.log(selectedCourse);
     return selectedCourse;
   }
 
-  addOrUpdateOrder(courseName: string, courseItem: CourseItem) {
-    // console.log(courseItem);
-    const newOrderedItem = new NewOrderedItem(courseName, courseItem.name, courseItem.amount)
+  addOrUpdateOrderItem(courseName: string, courseItem: CourseItem) {
+    
+   
+    // create newOrderedItem
+    const newOrderedItem = new NewOrderedItem(courseName, courseItem.name, courseItem.amount);
+    // check to see if this newOrderedItem has already been ordered
     const index = this.orderedItems.findIndex((orderedItem: NewOrderedItem) => {
       return orderedItem.courseItemName === courseItem.name && orderedItem.courseName === courseName;
     });
-
+    // if not; add the newOrderedItem to orderdItems
     if(index === -1) {
       this.orderedItems.push(newOrderedItem)
     } else {
+      // else update the amount of the already orderedItem
       this.orderedItems[index].courseItemAmount = courseItem.amount
     }
-    localStorage.setItem('orderedItems', JSON.stringify(this.orderedItems));
+    this.storeOrderedItemsInLocalStorage();
     this.calculateCourseTotal(courseName)
+  }
+
+  storeOrderedItemsInLocalStorage() {
+    localStorage.setItem('orderedItems', JSON.stringify(this.orderedItems));
   }
 
   calculateCourseTotal(courseName) {

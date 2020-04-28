@@ -33,7 +33,6 @@ export class CoursesComponent implements OnInit {
     this.coursesService.getMenu('cenc');
     this.cdr.detectChanges()
     const courseName = this.route.snapshot.params['courseName']
-    console.log(courseName);
     this.course = this.coursesService.getCourse(courseName)[0];
     this.courseName = this.course['courseName'];
     this.courseItems = this.course['courseItems']

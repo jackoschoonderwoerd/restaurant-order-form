@@ -3,6 +3,7 @@ import { SoepService } from '../soep/soep.service';
 import { OrderService } from './order.service';
 import { Router } from '@angular/router';
 import { CoursesService } from '../courses/courses.service';
+import { Course } from 'src/app/models/course.model';
 
 @Component({
   selector: 'app-order',
@@ -10,13 +11,14 @@ import { CoursesService } from '../courses/courses.service';
   styleUrls: ['./order.component.css']
 })
 export class OrderComponent implements OnInit {
-  courses;
+  courses: Course[] = [];
   orderedItems;
   soepOrders;
   itemOrders;
   itemType;
   totalItemPrice: number  = 0;
   soepTotal = 0;
+  menu
   constructor(
     private soepService: SoepService,
     private orderService: OrderService,
@@ -27,14 +29,21 @@ export class OrderComponent implements OnInit {
     'soep',
     'borrelhapjes'
   ];
+  
 
   finalPrice: number = 0;
 
   ngOnInit(): void {
-    this.courses = this.coursesService.getMenu('companyName');
+
+    this.menu = this.coursesService.getMenu('companyName');
+    console.log(this.menu);
+    this.menu.courses.forEach(course => {
+      this.courses.push(course);
+    })
     console.log(this.courses);
-    this.orderItems = this.coursesService.getOrderedItems();
-    console.log(this.orderItems);
+    // this.orderItems = this.coursesService.getOrderedItems();
+    // console.log(this.orderItems);
+
 
     // this.orderService.getItemOrders();
     // this.soepOrders = this.soepService.getCourseOrders().courseOrders;
