@@ -25,6 +25,9 @@ export class OrderComponent implements OnInit {
   orderTotal;
   orderTotalAfterDiscount;
   maaltijdDeals;
+  maaltijdDealsTotalPrice;
+  borrelDeals;
+  borrelDealsTotalPrice;
   discount;
   constructor(
     private soepService: SoepService,
@@ -43,7 +46,8 @@ export class OrderComponent implements OnInit {
 
   ngOnInit(): void {
     this.getOrderTotal();
-    this.getMaaltijdDeals();
+    this.calculateMaaltijdDeals();
+    this.calculateBorrelDeals();
     this.menu = this.coursesService.getMenu('companyName');
     this.menu.courses.forEach(course => {
       this.courses.push(course);
@@ -57,27 +61,38 @@ export class OrderComponent implements OnInit {
   onOrderMore() {
     this.dialog.open(AddFinalizeComponent)
   }
-  getMaaltijdDeals() {  //calculate discount
-    
-    const discountSum = 2; //euro
+
+  calculateMaaltijdDeals() {  //calculate maaltijdDeals  
+    const maaltijdDealsSum = 2; //euro
     const orderedMeals = this.coursesService.orderedItemsCount('maaltijden');
-    console.log('orderedMeals: ', orderedMeals);
-    let orderedWine = this.coursesService.orderedItemsCount('wijn');
-    console.log('orderedWine: ', orderedWine)
-    
-    this.discount = 0
+    let orderedWine = this.coursesService.orderedItemsCount('wijn')
+    this.maaltijdDealsTotalPrice = 0
     if (orderedMeals >= 2) {
       const maxWines = orderedMeals / 2;
-      console.log('maxWines: ', maxWines)
-      if(orderedWine > maxWines) {
-        orderedWine = Math.floor(maxWines)
-        console.log('orderedWine: ', orderedWine)
-        this.discount = Math.floor(orderedWine) * discountSum;
+      if(orderedWine >= maxWines) {
+        // orderedWine = Math.floor(maxWines)
+        this.maaltijdDeals = Math.floor(maxWines)
+        this.maaltijdDealsTotalPrice = Math.floor(this.maaltijdDeals) * maaltijdDealsSum;
       }
-      // console.log('Math.floor(discount: ', Math.floor(discount))
     } 
-    console.log('discount: ', this.discount)
-    return this.discount
-    // console.log(discountUnit);
+    return this.maaltijdDealsTotalPrice
+  }
+  
+  calculateBorrelDeals() {
+    const borreldealsSum = 1; //euro
+    const orderedBeers = this.coursesService.orderedItemsCount('bier');
+    let orderedBorrelhapjes = this.coursesService.orderedItemsCount('borrelhapjes');
+    console.log('orderedBeers: ', orderedBeers, 'orderedBorrelhapjes: ', orderedBorrelhapjes);
+    this.borrelDealsTotalPrice = 0;
+    if(orderedBeers >= 2) {
+      const maxBorrelHapjes = orderedBeers / 2;
+      if(orderedBorrelhapjes >= maxBorrelHapjes) {
+        // orderedBorrelhapjes = Math.floor(maxBorrelHapjes);
+        this.borrelDeals = Math.floor(maxBorrelHapjes);
+        this.borrelDealsTotalPrice = Math.floor(this.borrelDeals) * borreldealsSum;
+      }
+    }
+    console.log('this.borrelDeals: ', this.borrelDealsTotalPrice);
+    return this.borrelDealsTotalPrice;
   }
 }

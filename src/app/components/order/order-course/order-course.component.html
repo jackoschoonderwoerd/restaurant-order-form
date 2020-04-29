@@ -8,8 +8,8 @@
 </div>
 <table class="fixed-table">
   <div *ngFor="let courseItem of course.courseItems">
-    <tr *ngIf="courseItem.amount !== undefined && courseItem.amount !== '0'">
-      <td class="course-item-name">{{courseItem.name}}</td>
+    <tr *ngIf="courseItem.amount !== undefined && courseItem.amount !== '0' && courseItem.amount !== 0">
+      <td class="course-item-name">{{courseItem.name | titlecase}}</td>
       <td align="right" class="course-item-amount">{{courseItem.amount}}X</td>
       <td align="right" class="course-item-price">{{courseItem.price | currency:"EUR"}}</td>
       <td align="right" class="course-item-price-amount">{{courseItem.price * courseItem.amount | currency:"EUR"}}</td>

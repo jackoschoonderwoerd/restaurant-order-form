@@ -9,31 +9,7 @@ import { Menu } from '../models/menu.model';
 export class MenuService {
 
   selectedMenu: Menu;
-
-  // menus: Menu[] = [
-  //   new Menu(
-  //     'cenc',[
-  //     new Course('zout', [
-  //       new CourseItem('drop', 1),
-  //       new CourseItem('kaas', 2.5)
-  //     ]),
-  //     new Course('warm', [
-  //       new CourseItem('cacao', 1)
-  //     ])
-  //   ]),
-  //   new Menu(
-  //     'bogus',[
-  //     new Course('zoet', [
-  //       new CourseItem('ijs', 1),
-  //       new CourseItem('cake', 2.5)
-  //     ]),
-  //     new Course('fris', [
-  //       new CourseItem('cola', 1)
-  //     ])
-  //   ])
-  // ]
-
-
+  
   bogus = new Menu([
     new Course('zoet', [
       new CourseItem('ijs', 1),
@@ -79,7 +55,7 @@ export class MenuService {
       new CourseItem('mooie nel', 3.5),
     ]),
     new Course('wijn', [
-      new CourseItem('wit (pinot grigio', 10),
+      new CourseItem('wit (pinot grigio)', 10),
       new CourseItem('rood (cabernet sangiovese)', 10),
     ]),
     new Course('fris', [
