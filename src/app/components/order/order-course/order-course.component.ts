@@ -14,11 +14,11 @@ export class OrderCourseComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.course.courseItems.forEach(courseItem => {
-      console.log(courseItem.name);
-      console.log(courseItem.amount);
-      console.log(typeof(courseItem.amount));
-    })
+    // this.course.courseItems.forEach(courseItem => {
+    //   console.log(courseItem.name);
+    //   console.log(courseItem.amount);
+    //   console.log(typeof(courseItem.amount));
+    // })
   }
   onEdit(courseName) {
     // console.log(courseName);

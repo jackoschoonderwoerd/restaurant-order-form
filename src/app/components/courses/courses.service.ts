@@ -148,36 +148,39 @@ export class CoursesService {
     // }
     return totalWijn;
   }
-  calculateMeals() {
-    let totalMeals = 0
-    const menu = this.getMenu('');
-    // if(localStorage.getItem('orderedItems')) {
-      menu.courses.forEach(course => {
-        if(course.courseName === 'maaltijden') {
-          const mealsCourse = course;
-          mealsCourse.courseItems.forEach(courseItem => {
-            totalMeals = totalMeals + +courseItem.amount;
-          }) 
-        }
-      })
+  // calculateMeals() {
+  //   let totalMeals = 0
+  //   const menu = this.getMenu('');
+  //   // if(localStorage.getItem('orderedItems')) {
+  //     menu.courses.forEach(course => {
+  //       if(course.courseName === 'maaltijden') {
+  //         const mealsCourse = course;
+  //         mealsCourse.courseItems.forEach(courseItem => {
+  //           totalMeals = totalMeals + +courseItem.amount;
+  //         }) 
+  //       }
+  //     })
     // }
-    return totalMeals;
-  }
+  //   return totalMeals;
+  // }
+
   orderedItemsCount(courseName) {
     let total = 0
     const menu = this.getMenu('');
-    // if(localStorage.getItem('orderedItems')) {
       menu.courses.forEach(course => {
         if(course.courseName === courseName) {
           const mealsCourse = course;
           mealsCourse.courseItems.forEach(courseItem => {
+            if (courseItem.amount === undefined || courseItem.price <= 3) {
+              courseItem.amount = 0;
+            } else {
+              courseItem.amount = courseItem.amount;
+            }
             total = total + +courseItem.amount;
           }) 
         }
       })
-    // }
     return total;
   }
-  
 }
 

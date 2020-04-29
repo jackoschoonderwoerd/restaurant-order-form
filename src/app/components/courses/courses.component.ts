@@ -35,7 +35,6 @@ export class CoursesComponent implements OnInit {
 
   ngOnInit(): void {
     const myCourseName = this.route.snapshot.paramMap.get('courseName')
-    console.log(myCourseName);
     this.coursesService.getMenu('cenc');
     this.cdr.detectChanges()
     const courseName = this.route.snapshot.params['courseName']

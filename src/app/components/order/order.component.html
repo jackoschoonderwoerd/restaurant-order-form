@@ -1,6 +1,6 @@
 <div class="my-section">
   <mat-card>
-    <div 
+    <div
       class="order-item-container"
       *ngFor="let course of courses">
       <app-order-course [course]="course"></app-order-course>
@@ -21,23 +21,41 @@
       *ngIf="orderTotal === 0">NOG NIETS GEKOZEN
     </div>
     <div *ngIf="orderTotal !== 0"
-        fxLayout fxLayoutAlign="space-between">
+      fxLayout fxLayoutAlign="space-between">
       <span>Totaal:</span><span><b>{{orderTotal | currency:"EUR"}}</b></span>
     </div>
     <div class=""
-      *ngIf="discount !== 0"
+      *ngIf="maaltijdDealsTotalPrice !== 0"
       fxLayout fxLayoutAlign="space-between">
-      <span>Korting Maaltijd deal</span><span><b>- {{discount | currency:"EUR"}}</b></span>
+      <span>Korting Maaltijd Deal
+        <span>({{maaltijdDeals}} X)</span>
+      </span>
+      <span><b>- {{maaltijdDealsTotalPrice | currency:"EUR"}}</b></span>
     </div>
     <div class=""
-      *ngIf="discount !== 0"
+      *ngIf="maaltijdDealsTotalPrice !== 0"
       fxLayout fxLayoutAlign="space-between">
       <span>Totaal</span>
-      <span><b>{{orderTotal - discount | currency:"EUR"}}</b></span>
+      <span><b>{{orderTotal - maaltijdDealsTotalPrice | currency:"EUR"}}</b></span>
     </div>
-  </mat-card>
 
+    <div class=""
+      *ngIf="borrelDealsTotalPrice !== 0"
+      fxLayout fxLayoutAlign="space-between">
+      <span>Korting Borrel Deal 
+        <span>({{ borrelDeals }} X)</span>
+      </span>
+      <span><b>- {{borrelDealsTotalPrice | currency:"EUR"}}</b></span>
+    </div>
+    <div class=""
+      *ngIf="borrelDealsTotalPrice !== 0"
+      fxLayout fxLayoutAlign="space-between">
+      <span>Totaal</span>
+      <span><b>{{orderTotal - maaltijdDealsTotalPrice - borrelDealsTotalPrice | currency:"EUR"}}</b></span>
+    </div>
+
+  </mat-card>
 </div>
 <div class="section">
-    <app-order-form></app-order-form>
+  <app-order-form></app-order-form>
 </div>
