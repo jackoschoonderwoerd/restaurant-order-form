@@ -22,7 +22,7 @@ export class MenuService {
 
   cenc = new Menu([
     new Course('soep', [
-      new CourseItem('tomatenpaprika', 11.25),
+      new CourseItem('tomatenpaprika', 5),
     ]),
     new Course('borrelhapjes', [
       new CourseItem('Friet klein', 4),
@@ -35,8 +35,16 @@ export class MenuService {
       new CourseItem('Chinese loempiaatjes (vegetarisch)', 5),
     ]),
     new Course('maaltijden', [
-      new CourseItem('Ossobuco (Italiaanse kalfsschenkel in tomaten-wijnsaus) met rosevalaardappelen, groente en salade', 14.5),
-      new CourseItem('Pasta met courgette-muntsaus, rode paprika en Parmezaanse kaas, met salade', 12.5),
+      new CourseItem(
+        'Ossobuco',
+        14.5,
+        'Italiaanse kalfsschenkel in tomaten-wijnsaus met rosevalaardappelen, groente en salade',
+        '../../../../../assets/images/course-items/ossobuco.jpg'),
+      new CourseItem(
+        'Pasta',
+        12.5, 
+        'Pasta met courgette-muntsaus, rode paprika en Parmezaanse kaas, met salade',
+        '../../../../../assets/images/course-items/pasta-courgette.jpg')
     ]),
     new Course('zoet', [
       new CourseItem('appeltaart', 4),

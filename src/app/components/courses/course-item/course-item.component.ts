@@ -2,6 +2,8 @@ import { Component, OnInit, Input, EventEmitter } from '@angular/core';
 import { CourseItem } from 'src/app/models/courseItem.model';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { CoursesService } from '../courses.service';
+import { MatDialog } from '@angular/material/dialog';
+import { CourseItemInfoDialogComponent } from './course-item-info-dialog/course-item-info-dialog.component';
 
 @Component({
   selector: 'app-course-item',
@@ -21,6 +23,7 @@ export class CourseItemComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private coursesService: CoursesService,
+    private dialog: MatDialog
     ) {}
 
   ngOnInit(): void {
@@ -39,6 +42,16 @@ export class CourseItemComponent implements OnInit {
     this.courseItemTotal = this.courseItem.amount * this.courseItem.price;
     this.coursesService.addOrUpdateOrderItem(this.courseName, this.courseItem)
   }
+
+  onCourseItemName(courseItem) {
+    console.log(courseItem);
+    this.dialog.open(CourseItemInfoDialogComponent,
+      {data: {
+        courseItem: courseItem
+      }})
+
+  }
+
   calculateCourseItemTotal() {
     // console.log('calculateCourseItemTotal() called')
     return this.courseItem.price * this.courseItem.amount;

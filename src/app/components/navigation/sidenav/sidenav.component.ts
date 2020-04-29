@@ -45,8 +45,8 @@ export class SidenavComponent implements OnInit, OnDestroy {
   }
   courseSelected(courseName) {
     this.onSidenavToggle();
-    this.course = this.coursesService.getCourse(courseName);
-    console.log(this.course);
+    console.log(courseName);
+
     this.router.navigate(['/courses', { courseName: courseName }]);
   }
 

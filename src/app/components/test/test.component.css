@@ -1,0 +1,27 @@
+tr {
+  vertical-align: top;
+}
+
+
+.item-select {
+  width: 35px
+}
+.item-name {
+  width: 128px
+}
+.item-price {
+  width: 60px
+}
+.item-total {
+  width: 60px
+}
+mat-icon {
+  margin-bottom: 0px;
+}
+.mat-icon-container {
+  padding: 0px;
+}
+select{
+  margin: 0px;
+  padding: 0px;
+}

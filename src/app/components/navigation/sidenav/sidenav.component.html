@@ -1,12 +1,21 @@
 <mat-nav-list>
-    <a mat-list-item (click)="onSidenavToggle()" routerLink="/home">HOME</a>
-    <a mat-list-item (click)="onSidenavToggle()" routerLink="/soep">SOEP</a>
-    <a mat-list-item (click)="onSidenavToggle()" routerLink="/dynamic-form">DYNAMIC FORM</a>
-    <a mat-list-item (click)="onSidenavToggle()" routerLink="/dynamic-form-question">DYNAMIC FORM QUESTION</a>
-    <a mat-list-item (click)="onSidenavToggle()" routerLink="/test">TEST</a>
-    <a mat-list-item (click)="onSidenavToggle()" routerLink="/order"><span class="material-icons">
-      shopping_basket
-      </span></a>
+  <a mat-list-item (click)="onSidenavToggle()" routerLink="/home">
+    <span class="material-icons">
+      home
+    </span>
+  </a>
+  <a
+    *ngFor="let courseName of courseNames"
+    mat-list-item (click)="courseSelected(courseName)">
+    {{courseName | uppercase}}
+  </a>
 
-    <a *ngFor="let courseName of courseNames" mat-list-item (click)="courseSelected(courseName)" routerLink="/test">{{courseName}}</a>
-      
+  <a mat-list-item (click)="onSidenavToggle()" routerLink="/order">
+    <span class="material-icons">
+      shopping_basket
+    </span>
+  </a>
+  <a mat-list-item (click)="onSidenavToggle()" routerLink="/test">
+    <span>TEST</span>
+    
+  </a>

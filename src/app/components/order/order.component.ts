@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SoepService } from '../soep/soep.service';
+// import { SoepService } from '../soep/soep.service';
 import { OrderService } from './order.service';
 import { Router } from '@angular/router';
 import { CoursesService } from '../courses/courses.service';
@@ -30,7 +30,7 @@ export class OrderComponent implements OnInit {
   borrelDealsTotalPrice;
   discount;
   constructor(
-    private soepService: SoepService,
+    // private soepService: SoepService,
     private orderService: OrderService,
     private coursesService: CoursesService,
     private router: Router,

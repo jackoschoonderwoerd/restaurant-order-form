@@ -1,23 +1,53 @@
-<div class="my-section">
-  <table class="fixed-table">
-    <tr>
-      <td class="item-select">
-        <form [formGroup]="itemOrderForm">
-            <select
-              formControlName="amount" 
-              (change)="onChange($event)">
-              <option
-                *ngFor="let option of options" 
-                [value]="option">
-                {{option}}
-              </option>
-            </select>
-        </form>
-      </td>
-      <td class="item-name">{{courseItem.name | titlecase }}</td>
-      <td class="item-price" align="right">{{courseItem.price | currency:"EUR"}}</td>
-      <td class="item-total" align="right">{{courseItemTotal | currency:"EUR"}}</td>
-    </tr>
-  </table>
-  <!-- {{itemName}} - {{itemPrice}} -->
-</div>
+<!-- <table class="fixed-table">
+  <tr>
+    <td class="item-select">
+      <form [formGroup]="itemOrderForm">
+        <select
+          formControlName="amount"
+          (change)="onChange($event)">
+          <option
+            *ngFor="let option of options"
+            [value]="option">
+            {{option}}
+          </option>
+        </select>
+      </form>
+    </td>
+    <td (click)="onCourseItemName(courseItem)" class="item-name">
+      {{courseItem.name | titlecase }}
+      <span class="mat-icon-container">
+        <mat-icon *ngIf="courseItem.description">info</mat-icon>
+      </span>
+    </td>
+    <td class="item-price" align="right">{{courseItem.price | currency:"EUR"}}</td>
+    <td class="item-total" align="right">{{courseItemTotal | currency:"EUR"}}</td>
+  </tr>
+</table> -->
+
+
+
+<table class="fixed-table">
+  <tr>
+    <td class="item-select">
+      <form [formGroup]="itemOrderForm">
+        <select
+          formControlName="amount"
+          (change)="onChange($event)">
+          <option
+            *ngFor="let option of options"
+            [value]="option">
+            {{option}}
+          </option>
+        </select>
+      </form>
+    </td>
+    <td (click)="onCourseItemName(courseItem)" class="item-name">
+      {{courseItem.name | titlecase }}
+      <span class="mat-icon-container">
+        <mat-icon *ngIf="courseItem.description">info</mat-icon>
+      </span>
+    </td>
+    <td class="item-price" align="right">{{courseItem.price | currency:"EUR"}}</td>
+    <td class="item-total" align="right">{{courseItemTotal | currency:"EUR"}}</td>
+  </tr>
+</table>

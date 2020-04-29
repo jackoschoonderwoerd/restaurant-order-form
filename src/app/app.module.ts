@@ -6,19 +6,16 @@ import { MaterialModule } from './material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
-
-// import { DynamicFormQuestionComponent } from './dynamic-form-question/dynamic-form-question.component';
-// import { DynamicFormComponent } from './dynamic-form/dynamic-form.component';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { HeaderComponent } from './components/navigation/header/header.component';
 import { SidenavComponent } from './components/navigation/sidenav/sidenav.component';
 
-import { SoepFormComponent } from './components/soep/soep-form/soep-form.component';
-import { SoepListComponent } from './components/soep/soep-form/soep-list/soep-list.component';
+
+
 import { TestComponent } from './components/test/test.component';
 
-import { QuestionControlService } from './form-stuff/question-control.service';
+
 import { OrderComponent } from './components/order/order.component';
 import { AddToOrderComponent } from './components/dialogs/add-to-order/add-to-order.component';
 import { ContinueOrderingComponent } from './components/dialogs/continue-ordering/continue-ordering.component';
@@ -30,6 +27,7 @@ import { CoursesComponent } from './components/courses/courses.component';
 import { CourseItemComponent } from './components/courses/course-item/course-item.component';
 import { OrderCourseComponent } from './components/order/order-course/order-course.component';
 import { AddFinalizeComponent } from './components/courses/add-finalize/add-finalize.component';
+import { CourseItemInfoDialogComponent } from './components/courses/course-item/course-item-info-dialog/course-item-info-dialog.component';
 
 
 
@@ -49,8 +47,6 @@ import { AddFinalizeComponent } from './components/courses/add-finalize/add-fina
     HomeComponent,
     HeaderComponent,
     SidenavComponent,
-    SoepListComponent,
-    SoepFormComponent,
     TestComponent,
     OrderComponent,
     AddToOrderComponent,
@@ -62,9 +58,10 @@ import { AddFinalizeComponent } from './components/courses/add-finalize/add-fina
     CourseItemComponent,
     OrderCourseComponent,
     AddFinalizeComponent,
+    CourseItemInfoDialogComponent,
 
   ],
-  providers: [QuestionControlService],
+  providers: [],
   bootstrap: [AppComponent],
   entryComponents: [
     AddToOrderComponent,

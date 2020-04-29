@@ -5,8 +5,8 @@ import { ChangeDetectorRef } from '@angular/core';
 import { Course } from 'src/app/models/course.model';
 import { CourseItem } from 'src/app/models/courseItem.model';
 import { FormGroup } from '@angular/forms';
-import { QuestionControlService } from 'src/app/form-stuff/question-control.service';
-import { QuestionBase } from 'src/app/form-stuff/question-base';
+// import { QuestionControlService } from 'src/app/form-stuff/question-control.service';
+// import { QuestionBase } from 'src/app/form-stuff/question-base';
 import { MatDialog } from '@angular/material/dialog';
 import { AddFinalizeComponent } from './add-finalize/add-finalize.component';
 
@@ -21,7 +21,7 @@ export class CoursesComponent implements OnInit {
     private coursesService: CoursesService,
     private route: ActivatedRoute,
     private cdr: ChangeDetectorRef,
-    private qcs: QuestionControlService,
+    // private qcs: QuestionControlService,
     private dialog: MatDialog
     ) { }
 

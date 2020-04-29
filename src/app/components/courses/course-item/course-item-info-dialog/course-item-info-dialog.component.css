@@ -1,0 +1,9 @@
+.image-container{
+  width: 100%;
+}
+img {
+  width: 100%;
+}
+.courseItem-description {
+  margin-bottom: 15px;
+}
