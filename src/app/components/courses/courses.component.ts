@@ -47,7 +47,7 @@ export class CoursesComponent implements OnInit {
       })
     );
   }
-  onAdd() {
+  onNaarBestellijst() {
     this.dialog.open(AddFinalizeComponent)
   }
 }

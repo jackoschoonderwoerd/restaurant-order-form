@@ -1,25 +1,33 @@
-
-<div class="my-section">
-    <div class="card-container">
-        <div class="course-name-container">
-            <h3>{{courseName}}</h3>
-        </div>
-        <mat-card>
-            <div *ngFor="let courseItem of courseItems" class="course-item">
-                <app-course-item
-                    [courseItem]="courseItem" 
-                    [courseName]="courseName">
-                </app-course-item>
-            </div>
-            <table class="fixed-table">
-                <td class="first-column">Total</td>
-                <td align="right" class="second-column">{{courseTotal | currency:"EUR"}}</td>
-            </table>
-            <button
-                mat-raised-button color="primary"
-                (click)="onAdd()">
-                ADD
-            </button>
-        </mat-card>
+<div>
+  <div class="card-container">
+    <div class="course-name-container">
+      <h3>{{courseName}}</h3>
     </div>
+    <mat-card>
+      <div *ngFor="let courseItem of courseItems" class="course-item">
+        <app-course-item
+          [courseItem]="courseItem"
+          [courseName]="courseName">
+        </app-course-item>
+      </div>
+      <div *ngIf="courseTotal !== 0" class="course-total-container"><b>
+        <div class="filler-h-40"></div>
+        <div fxLayout fxLayoutAlign="space-between">
+          <span>Totaal {{courseName}}</span>
+          <span>{{courseTotal | currency:"EUR"}}</span>
+        </div></b>
+      </div>
+     
+      <!-- <table class="fixed-table">
+        <td class="first-column">Total</td>
+        <td align="right" class="second-column">{{courseTotal | currency:"EUR"}}</td>
+      </table> -->
+      <button
+        class="naar-bestellijst-button"
+        mat-raised-button color="primary"
+        (click)="onNaarBestellijst()">
+        NAAR AAN BESTELLIJST
+      </button>
+    </mat-card>
+  </div>
 </div>

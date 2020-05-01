@@ -7,6 +7,9 @@ import { Course } from 'src/app/models/course.model';
 import { MatDialog } from '@angular/material/dialog';
 import { FinalizeOrderDialogComponent } from './finalize-order-dialog/finalize-order-dialog.component';
 import { AddFinalizeComponent } from '../courses/add-finalize/add-finalize.component';
+import { BorreldealInfoDialogComponent } from './borreldeal-info-dialog/borreldeal-info-dialog.component';
+import { MaaltijddealInfoDialogComponent } from './maaltijddeal-info-dialog/maaltijddeal-info-dialog.component';
+
 
 @Component({
   selector: 'app-order',
@@ -94,5 +97,11 @@ export class OrderComponent implements OnInit {
     }
     console.log('this.borrelDeals: ', this.borrelDealsTotalPrice);
     return this.borrelDealsTotalPrice;
+  }
+  openBorrelDealInfo() {
+    this.dialog.open(BorreldealInfoDialogComponent);
+  }
+  openMaatijdDealInfo() {
+    this.dialog.open(MaaltijddealInfoDialogComponent);
   }
 }

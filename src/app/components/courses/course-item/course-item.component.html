@@ -26,28 +26,55 @@
 
 
 
-<table class="fixed-table">
-  <tr>
-    <td class="item-select">
-      <form [formGroup]="itemOrderForm">
-        <select
-          formControlName="amount"
-          (change)="onChange($event)">
-          <option
-            *ngFor="let option of options"
-            [value]="option">
-            {{option}}
-          </option>
-        </select>
-      </form>
-    </td>
-    <td (click)="onCourseItemName(courseItem)" class="item-name">
-      {{courseItem.name | titlecase }}
-      <span class="mat-icon-container">
-        <mat-icon *ngIf="courseItem.description">info</mat-icon>
-      </span>
-    </td>
-    <td class="item-price" align="right">{{courseItem.price | currency:"EUR"}}</td>
-    <td class="item-total" align="right">{{courseItemTotal | currency:"EUR"}}</td>
-  </tr>
-</table>
+
+
+<div class="course-item-container">
+  <form [formGroup]="itemOrderForm">
+    <select
+      class="select-container"
+      formControlName="amount"
+      (change)="onChange($event)">
+      <option
+        *ngFor="let option of options"
+        [value]="option">
+        {{option}}
+      </option>
+    </select>
+  </form>
+
+
+  <div class="name-container"
+    (click)="onCourseItemName(courseItem)"
+    [ngStyle]="{cursor: determineInfoStyle()}">
+    {{courseItem.name | titlecase }}
+  </div>
+
+  <span class="info-container"
+    [ngStyle]="{cursor: determineInfoStyle()}"
+    (click)="onCourseItemName(courseItem)">
+    <mat-icon *ngIf="courseItem.description">info</mat-icon>
+  </span>
+
+  <!-- <span class="info-container">
+    <i class="fas fa-info"></i>
+  </span> -->
+
+  <div
+    class="price-container">{{courseItem.price | currency:"EUR"}}
+  </div>
+
+  <div
+
+    class="amount-container">
+    <span *ngIf="courseItem.amount !== 0 && courseItem.amount !== '0'">
+      {{courseItem.amount}}X
+    </span>
+  </div>
+
+  <div
+    class="total-container">
+    <span *ngIf="courseItemTotal !== 0">
+      {{courseItemTotal | currency:"EUR"}}
+    </span>
+  </div>
+</div>

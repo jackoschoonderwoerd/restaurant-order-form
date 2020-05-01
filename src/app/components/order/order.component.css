@@ -11,3 +11,11 @@
 td {
     width: 25%
 }
+.info-icon {
+    display: inline-flex;
+    vertical-align: middle;
+    margin-bottom: 5px;
+}
+.info-icon:hover {
+    cursor: pointer;
+}

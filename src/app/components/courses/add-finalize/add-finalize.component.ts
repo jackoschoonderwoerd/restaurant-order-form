@@ -17,6 +17,7 @@ export class AddFinalizeComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    console.log('onInit add-finalize called')
     this.courseNames = this.coursesService.getCourseNames();
     // console.log(this.courseNames);
   }

@@ -1,4 +1,4 @@
-import { Component }       from '@angular/core';
+import { Component, OnInit }       from '@angular/core';
 import { Observable }      from 'rxjs';
 import { CoursesService } from './components/courses/courses.service';
 
@@ -9,10 +9,13 @@ import { CoursesService } from './components/courses/courses.service';
     './app.component.css'
   ],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
   constructor(
     private coursesService: CoursesService) {
+  }
+  ngOnInit() {
+    this.coursesService.getMenu('cenc');
   }
 }
 

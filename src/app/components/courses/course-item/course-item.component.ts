@@ -56,4 +56,7 @@ export class CourseItemComponent implements OnInit {
     // console.log('calculateCourseItemTotal() called')
     return this.courseItem.price * this.courseItem.amount;
   }
+  determineInfoStyle() {
+    return this.courseItem.description ? 'pointer' : '';
+  }
 }

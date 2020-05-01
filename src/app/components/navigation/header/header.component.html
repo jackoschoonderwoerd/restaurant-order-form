@@ -1,36 +1,38 @@
-<mat-toolbar color="primary">
-    <div fxHide.gt-sm>
-        <button mat-icon-button (click)="onToggleSidenav()">
-      <mat-icon>
+<mat-toolbar
+fxFlex fxLayoutAlign="space-between center center"
+  color="primary">
+  <div fxHide.gt-sm>
+    <button mat-icon-button (click)="onToggleSidenav()">
+      <mat-icon class="menu-icon">
         menu
       </mat-icon>
-    
+
       <!-- <mat-icon class="mat-icon-rtl-mirror" svgIcon="thumb-up"></mat-icon> -->
     </button>
-    </div>
-    <div class="logo-username" fxFlex fxLayoutAlign="space-between">
-        <a routerLink="/">Logo</a>
-        <!-- <span>{{ globalUsername }}</span> -->
-    </div>
-    <!-- <ul fxFlex fxLayout="row" fxLayoutAlign="space-between">
+  </div>
+  <div class="logo-username">
+    <a routerLink="/">Captein & Co</a>
+    <!-- <span>{{ globalUsername }}</span> -->
+  </div>
+  <!-- <ul fxFlex fxLayout="row" fxLayoutAlign="space-between">
         <li></li>
         <li> </li>
     </ul> -->
-    <div></div>
-    <div fxFlex fxLayout fxLayoutAlign="flex-end" fxHide.lt-md>
+  <!-- <div></div> -->
+  <!-- <div fxFlex fxLayout fxLayoutAlign="flex-end" fxHide.lt-md>
         <ul fxLayout fxLayoutGap="20px" class="navigation-items">
             <li><a routerLink="/home">HOME</a></li>
             <li><a routerLink="/soep">SOEP</a></li>
             <li><a routerLink="/order"><span class="material-icons">
                 shopping_basket
-                </span></a></li>
-            <!-- <li *ngIf="isAuthenticated"><a (click)="onYourHorns()">Yours Horns</a></li>
+                </span></a></li> -->
+  <!-- <li *ngIf="isAuthenticated"><a (click)="onYourHorns()">Yours Horns</a></li>
             <li>{{ isAuthenticated ? globalUsername : 'not logged in' }}</li>
             <li *ngIf="isAuthenticated"><a routerLink="/quick-check">Check</a></li>
             <li *ngIf="isAuthenticated"><a routerLink="/addHornForm">Add Horn</a></li>
             <li *ngIf="!isAuthenticated"><a routerLink="/signup">Sign up</a></li>
             <li *ngIf="!isAuthenticated"><a routerLink="/login">Log in</a></li>
             <li *ngIf="isAuthenticated"><a (click)="onLogOut()">Log out</a></li> -->
-        </ul>
-    </div>
+  <!-- </ul>
+    </div> -->
 </mat-toolbar>

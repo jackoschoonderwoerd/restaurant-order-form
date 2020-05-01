@@ -1,8 +1,9 @@
 <mat-nav-list>
   <a mat-list-item (click)="onSidenavToggle()" routerLink="/home">
-    <span class="material-icons">
+    <span class="material-icons home-icon">
       home
     </span>
+    <span>HOME</span>
   </a>
   <a
     *ngFor="let courseName of courseNames"
@@ -11,11 +12,9 @@
   </a>
 
   <a mat-list-item (click)="onSidenavToggle()" routerLink="/order">
-    <span class="material-icons">
+    <span class="material-icons shopping-basket-icon">
       shopping_basket
     </span>
+    <span>BESTELLEN</span>
   </a>
-  <a mat-list-item (click)="onSidenavToggle()" routerLink="/test">
-    <span>TEST</span>
-    
-  </a>
+ 

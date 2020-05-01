@@ -21,7 +21,40 @@ mat-icon {
 .mat-icon-container {
     padding: 0px;
 }
+
+
+/* =========== */
+
+.course-item-container {
+    margin-bottom: 10px;
+    display: flex;
+}
 select{
-    margin: 0px;
-    padding: 0px;
+    margin-right: 5px; 
+    height: 25px;
+    width: 35px;
+    /* flex:10; */
+}
+.name-container {
+    /* outline: 1px solid black; */
+    flex:40;
+}
+.info-container {
+    /* outline: 1px solid black; */
+    flex: 10;
+}
+.price-container {
+    /* outline: 1px solid black; */
+    flex: 20;
+    text-align: right;
+}
+.amount-container {
+    /* outline: 1px solid black; */
+    flex: 10;
+    text-align: center;
+}
+.total-container {
+    /* outline: 1px solid black; */
+    flex: 20;
+    text-align: right;
 }

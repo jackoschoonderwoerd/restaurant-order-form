@@ -29,6 +29,9 @@ import { OrderCourseComponent } from './components/order/order-course/order-cour
 import { AddFinalizeComponent } from './components/courses/add-finalize/add-finalize.component';
 import { CourseItemInfoDialogComponent } from './components/courses/course-item/course-item-info-dialog/course-item-info-dialog.component';
 
+import { MaaltijddealInfoDialogComponent } from './components/order/maaltijddeal-info-dialog/maaltijddeal-info-dialog.component';
+import { BorreldealInfoDialogComponent } from './components/order/borreldeal-info-dialog/borreldeal-info-dialog.component';
+
 
 
 @NgModule({
@@ -59,6 +62,9 @@ import { CourseItemInfoDialogComponent } from './components/courses/course-item/
     OrderCourseComponent,
     AddFinalizeComponent,
     CourseItemInfoDialogComponent,
+    
+    MaaltijddealInfoDialogComponent,
+    BorreldealInfoDialogComponent,
 
   ],
   providers: [],
