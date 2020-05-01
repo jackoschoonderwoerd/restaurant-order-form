@@ -1,4 +1,4 @@
-<div class="my-section">
+<div>
   <mat-card>
     <div
       class="order-item-container"
@@ -8,9 +8,9 @@
     <div class="">
       <button
         mat-raised-button
-        color="primary"
+        color=""
         (click)="onOrderMore()">
-        ORDER MORE
+        MEER BESTELLEN
       </button>
     </div>
   </mat-card>
@@ -28,6 +28,7 @@
       *ngIf="maaltijdDealsTotalPrice !== 0"
       fxLayout fxLayoutAlign="space-between">
       <span>Korting Maaltijd Deal
+        <mat-icon class="info-icon" (click)="openMaatijdDealInfo()">info</mat-icon>
         <span>({{maaltijdDeals}} X)</span>
       </span>
       <span><b>- {{maaltijdDealsTotalPrice | currency:"EUR"}}</b></span>
@@ -42,11 +43,13 @@
     <div class=""
       *ngIf="borrelDealsTotalPrice !== 0"
       fxLayout fxLayoutAlign="space-between">
-      <span>Korting Borrel Deal 
+      <span>Korting Borrel Deal
+        <mat-icon class="info-icon" (click)="openBorrelDealInfo()">info</mat-icon>
         <span>({{ borrelDeals }} X)</span>
       </span>
       <span><b>- {{borrelDealsTotalPrice | currency:"EUR"}}</b></span>
     </div>
+
     <div class=""
       *ngIf="borrelDealsTotalPrice !== 0"
       fxLayout fxLayoutAlign="space-between">

@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+
 
 @Component({
   selector: 'app-order-course',
@@ -10,7 +12,8 @@ export class OrderCourseComponent implements OnInit {
 
   @Input() course;
   constructor(
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -24,4 +27,5 @@ export class OrderCourseComponent implements OnInit {
     // console.log(courseName);
     this.router.navigate(['/courses', {courseName: courseName}])
   }
+  
 }

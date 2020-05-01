@@ -1,3 +1,13 @@
+mat-toolbar {
+    padding-left: 0px;
+}
+
+.menu-icon {
+    /* height: 100px;
+    width: 100px; */
+    font-size: 40px;
+}
+
 ul {
     list-style: none;
 }

@@ -1,0 +1,17 @@
+.bestellen-menu-item {
+  border: 1px solid blue;
+}
+
+.shopping-basket-icon {
+  display: inline-flex;
+    vertical-align: middle;
+    margin-bottom: 6px;
+    margin-right: 5px;
+}
+
+.home-icon {
+  display: inline-flex;
+    vertical-align: middle;
+    margin-bottom: 6px;
+    margin-right: 5px;
+}

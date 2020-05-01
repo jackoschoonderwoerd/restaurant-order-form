@@ -2,11 +2,24 @@
   class="course-name"
   fxLayout fxLayoutAlign="space-between">
   <span>
-    {{course.courseName}}
+    {{course.courseName | titlecase}}
   </span>
-  <button mat-raised-button color="primary" (click)="onEdit(course.courseName)">EDIT</button>
+  <!-- <button
+    class="edit-icon-button" 
+    mat-raised-button 
+    color="primary" 
+    (click)="onEdit(course.courseName)">
+    <span class="material-icons edit-icon">
+      edit
+    </span>
+  </button> -->
+  <span
+    class="material-icons edit-icon"
+    (click)="onEdit(course.courseName)">
+    edit
+  </span>
 </div>
-<table class="fixed-table">
+<!-- <table class="fixed-table">
   <div *ngFor="let courseItem of course.courseItems">
     <tr *ngIf="courseItem.amount !== undefined && courseItem.amount !== '0' && courseItem.amount !== 0">
       <td class="course-item-name">{{courseItem.name | titlecase}}</td>
@@ -15,6 +28,24 @@
       <td align="right" class="course-item-price-amount">{{courseItem.price * courseItem.amount | currency:"EUR"}}</td>
     </tr>
   </div>
-  <hr>
-</table>
+</table> -->
 
+<div *ngFor="let courseItem of course.courseItems">
+  <div  
+    class="courseItem" 
+    *ngIf="courseItem.amount !== undefined && courseItem.amount !== '0' && courseItem.amount !== 0">
+    <div class="name">
+      {{courseItem.name | titlecase}}
+    </div>
+    <div class="amount">
+      {{courseItem.amount}}X
+    </div>
+    <div class="price">
+      {{courseItem.price | currency:"EUR"}}
+    </div>
+    <div class="total-price">
+      {{courseItem.price * courseItem.amount | currency:"EUR"}}
+    </div>
+  </div>
+</div>
+<hr>

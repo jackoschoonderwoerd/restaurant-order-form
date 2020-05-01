@@ -1,14 +1,21 @@
-<mat-sidenav-container>
+<!-- <div class="main-container" fxLayout="row" fxLayoutAlign="center center"> -->
+
+
+<div class="main-container"  fxLayout fxLayoutAlign="center">
+  <mat-sidenav-container>
     <mat-sidenav #sidenav role="navigation">
-        <app-sidenav (sidenavToggle)="sidenav.toggle()"></app-sidenav>
+      <app-sidenav (sidenavToggle)="sidenav.toggle()"></app-sidenav>
     </mat-sidenav>
     <mat-sidenav-content>
-        <app-header (sidenavToggle)="sidenav.toggle()"></app-header>
-        <main  fxLayout="column" fxLayoutAlign="center center">
-            <router-outlet></router-outlet>
-        </main>
+      <app-header (sidenavToggle)="sidenav.toggle()"></app-header>
+      <main fxLayout="column" fxLayoutAlign="center center">
+        <router-outlet></router-outlet>
+      </main>
     </mat-sidenav-content>
-</mat-sidenav-container>
+  </mat-sidenav-container>
+</div>
+
+<!-- </div> -->
 <!-- <div>
     <h2>C & C</h2>
     <app-dynamic-form [questions]="questions$ | async"></app-dynamic-form>

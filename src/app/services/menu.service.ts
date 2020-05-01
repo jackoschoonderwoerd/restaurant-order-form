@@ -39,12 +39,12 @@ export class MenuService {
         'Ossobuco',
         14.5,
         'Italiaanse kalfsschenkel in tomaten-wijnsaus met rosevalaardappelen, groente en salade',
-        '../../../../../assets/images/course-items/ossobuco.jpg'),
+        'https://captein-en-co.s3.eu-central-1.amazonaws.com/images/course-items/ossobuco.jpg'),
       new CourseItem(
         'Pasta',
         12.5, 
         'Pasta met courgette-muntsaus, rode paprika en Parmezaanse kaas, met salade',
-        '../../../../../assets/images/course-items/pasta-courgette.jpg')
+        'https://captein-en-co.s3.eu-central-1.amazonaws.com/images/course-items/pasta-courgette.jpg')
     ]),
     new Course('zoet', [
       new CourseItem('appeltaart', 4),
@@ -79,7 +79,6 @@ export class MenuService {
       new CourseItem('ginger ale', 2.5),
       new CourseItem('tonic', 2.5),
       new CourseItem('bitter lemon', 2.5),
-
     ]),
   ]);
 

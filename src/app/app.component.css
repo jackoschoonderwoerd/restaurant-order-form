@@ -1,11 +1,27 @@
+.main-container {
+  border: 2px solid blue;
+  height: 100%
+}
+
 mat-sidenav-container,
 mat-sidenav-content,
 mat-sidenav {
   height: 100%;
 }
 
+mat-sidenav-container {
+  border: 2px solid pink;
+}
+
+mat-sidenav-content {
+  border: 2px solid red;
+  /* width: 600px; */
+
+}
+
 mat-sidenav {
   width: 250px;
+  border: 2px solid green;
 }
 
 a {
@@ -23,3 +39,6 @@ a:active {
   margin: 0;
   padding: 0;
 }
+/* .main-container {
+  width: 600px;
+} */
