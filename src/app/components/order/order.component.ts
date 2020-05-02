@@ -7,8 +7,9 @@ import { Course } from 'src/app/models/course.model';
 import { MatDialog } from '@angular/material/dialog';
 import { FinalizeOrderDialogComponent } from './finalize-order-dialog/finalize-order-dialog.component';
 import { AddFinalizeComponent } from '../courses/add-finalize/add-finalize.component';
-import { BorreldealInfoDialogComponent } from './borreldeal-info-dialog/borreldeal-info-dialog.component';
+
 import { MaaltijddealInfoDialogComponent } from './maaltijddeal-info-dialog/maaltijddeal-info-dialog.component';
+import { BorreldealInfoDialogComponent } from './borreldeal-info-dialog/borreldeal-info-dialog.component';
 
 
 @Component({
@@ -32,6 +33,7 @@ export class OrderComponent implements OnInit {
   borrelDeals;
   borrelDealsTotalPrice;
   discount;
+  loadingStatus: boolean = false;
   constructor(
     // private soepService: SoepService,
     private orderService: OrderService,
@@ -48,6 +50,11 @@ export class OrderComponent implements OnInit {
   finalPrice: number = 0;
 
   ngOnInit(): void {
+    this.orderService.loadingStatusChanged.subscribe((loadingStatus: boolean) => {
+      this.loadingStatus = loadingStatus;
+      console.log(this.loadingStatus)
+    });
+    console.log('this.loadingStatus: ', this.loadingStatus)
     this.getOrderTotal();
     this.calculateMaaltijdDeals();
     this.calculateBorrelDeals();
@@ -85,7 +92,6 @@ export class OrderComponent implements OnInit {
     const borreldealsSum = 1; //euro
     const orderedBeers = this.coursesService.orderedItemsCount('bier');
     let orderedBorrelhapjes = this.coursesService.orderedItemsCount('borrelhapjes');
-    console.log('orderedBeers: ', orderedBeers, 'orderedBorrelhapjes: ', orderedBorrelhapjes);
     this.borrelDealsTotalPrice = 0;
     if(orderedBeers >= 2) {
       const maxBorrelHapjes = orderedBeers / 2;
@@ -95,7 +101,6 @@ export class OrderComponent implements OnInit {
         this.borrelDealsTotalPrice = Math.floor(this.borrelDeals) * borreldealsSum;
       }
     }
-    console.log('this.borrelDeals: ', this.borrelDealsTotalPrice);
     return this.borrelDealsTotalPrice;
   }
   openBorrelDealInfo() {

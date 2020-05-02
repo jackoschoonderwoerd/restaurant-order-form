@@ -31,6 +31,7 @@ import { CourseItemInfoDialogComponent } from './components/courses/course-item/
 
 import { MaaltijddealInfoDialogComponent } from './components/order/maaltijddeal-info-dialog/maaltijddeal-info-dialog.component';
 import { BorreldealInfoDialogComponent } from './components/order/borreldeal-info-dialog/borreldeal-info-dialog.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -41,7 +42,8 @@ import { BorreldealInfoDialogComponent } from './components/order/borreldeal-inf
     BrowserAnimationsModule,
     FlexLayoutModule,
     AppRoutingModule,
-    MaterialModule
+    MaterialModule,
+    HttpClientModule,
   ],
   declarations: [
     AppComponent,

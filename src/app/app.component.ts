@@ -1,6 +1,7 @@
 import { Component, OnInit }       from '@angular/core';
 import { Observable }      from 'rxjs';
 import { CoursesService } from './components/courses/courses.service';
+import { OrderService } from './components/order/order.service';
 
 @Component({
   selector: 'app-root',
@@ -11,11 +12,18 @@ import { CoursesService } from './components/courses/courses.service';
 })
 export class AppComponent implements OnInit {
 
+  loadingStatus: boolean = false;
+
   constructor(
-    private coursesService: CoursesService) {
+    private coursesService: CoursesService,
+    private orderService: OrderService) {
+    
   }
   ngOnInit() {
     this.coursesService.getMenu('cenc');
+    this.orderService.loadingStatusChanged.subscribe((loadingStatus: boolean) => {
+      this.loadingStatus = loadingStatus;
+    });
   }
 }
 

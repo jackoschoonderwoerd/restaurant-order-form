@@ -18,19 +18,19 @@ export class CourseItemComponent implements OnInit {
   default: number = 2;
   courseItemTotal: number = 0;
   itemOrderForm: FormGroup
-  
+
 
   constructor(
     private formBuilder: FormBuilder,
     private coursesService: CoursesService,
     private dialog: MatDialog
-    ) {}
+  ) { }
 
   ngOnInit(): void {
     this.itemOrderForm = new FormGroup({
       amount: new FormControl(null)
     });
-    this.itemOrderForm.controls['amount'].setValue(this.courseItem.amount, {onSelf: true});
+    this.itemOrderForm.controls['amount'].setValue(this.courseItem.amount, { onSelf: true });
     this.courseItemTotal = this.calculateCourseItemTotal();
     setTimeout(() => {
       this.coursesService.calculateCourseTotal(this.courseName);
@@ -44,12 +44,15 @@ export class CourseItemComponent implements OnInit {
   }
 
   onCourseItemName(courseItem) {
-    console.log(courseItem);
-    this.dialog.open(CourseItemInfoDialogComponent,
-      {data: {
-        courseItem: courseItem
-      }})
-
+    if (courseItem.description) {
+      console.log(courseItem);
+      this.dialog.open(CourseItemInfoDialogComponent,
+        {
+          data: {
+            courseItem: courseItem
+          }
+        })
+    }
   }
 
   calculateCourseItemTotal() {

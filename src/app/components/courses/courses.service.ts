@@ -82,7 +82,8 @@ export class CoursesService {
     
    
     // create newOrderedItem
-    const newOrderedItem = new NewOrderedItem(courseName, courseItem.name, courseItem.amount);
+    const newOrderedItem = new NewOrderedItem(courseName, courseItem.name, +courseItem.amount);
+    console.log(newOrderedItem);
     // check to see if this newOrderedItem has already been ordered
     const index = this.orderedItems.findIndex((orderedItem: NewOrderedItem) => {
       return orderedItem.courseItemName === courseItem.name && orderedItem.courseName === courseName;

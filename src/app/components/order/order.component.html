@@ -1,64 +1,67 @@
 <div>
-  <mat-card>
-    <div
-      class="order-item-container"
-      *ngFor="let course of courses">
-      <app-order-course [course]="course"></app-order-course>
-    </div>
-    <div class="">
-      <button
-        mat-raised-button
-        color=""
-        (click)="onOrderMore()">
-        MEER BESTELLEN
-      </button>
-    </div>
-  </mat-card>
+  <div *ngIf="loadingStatus">Loading...</div>
+  <div *ngIf="!loadingStatus" class="">
+    <mat-card>
+      <div
+        class="order-item-container"
+        *ngFor="let course of courses">
+        <app-order-course [course]="course"></app-order-course>
+      </div>
+      <div class="">
+        <button
+          mat-raised-button
+          color=""
+          (click)="onOrderMore()">
+          MEER BESTELLEN
+        </button>
+      </div>
+    </mat-card>
 
-  <mat-card>
-    <div
-      class=""
-      *ngIf="orderTotal === 0">NOG NIETS GEKOZEN
-    </div>
-    <div *ngIf="orderTotal !== 0"
-      fxLayout fxLayoutAlign="space-between">
-      <span>Totaal:</span><span><b>{{orderTotal | currency:"EUR"}}</b></span>
-    </div>
-    <div class=""
-      *ngIf="maaltijdDealsTotalPrice !== 0"
-      fxLayout fxLayoutAlign="space-between">
-      <span>Korting Maaltijd Deal
-        <mat-icon class="info-icon" (click)="openMaatijdDealInfo()">info</mat-icon>
-        <span>({{maaltijdDeals}} X)</span>
-      </span>
-      <span><b>- {{maaltijdDealsTotalPrice | currency:"EUR"}}</b></span>
-    </div>
-    <div class=""
-      *ngIf="maaltijdDealsTotalPrice !== 0"
-      fxLayout fxLayoutAlign="space-between">
-      <span>Totaal</span>
-      <span><b>{{orderTotal - maaltijdDealsTotalPrice | currency:"EUR"}}</b></span>
-    </div>
+    <mat-card>
+      <div
+        class=""
+        *ngIf="orderTotal === 0">NOG NIETS GEKOZEN
+      </div>
+      <div *ngIf="orderTotal !== 0"
+        fxLayout fxLayoutAlign="space-between">
+        <span>Totaal:</span><span><b>{{orderTotal | currency:"EUR"}}</b></span>
+      </div>
+      <div class=""
+        *ngIf="maaltijdDealsTotalPrice !== 0"
+        fxLayout fxLayoutAlign="space-between">
+        <span>Korting Maaltijd Deal
+          <mat-icon class="info-icon" (click)="openMaatijdDealInfo()">info</mat-icon>
+          <span>({{maaltijdDeals}} X)</span>
+        </span>
+        <span><b>- {{maaltijdDealsTotalPrice | currency:"EUR"}}</b></span>
+      </div>
+      <div class=""
+        *ngIf="maaltijdDealsTotalPrice !== 0"
+        fxLayout fxLayoutAlign="space-between">
+        <span>Totaal</span>
+        <span><b>{{orderTotal - maaltijdDealsTotalPrice | currency:"EUR"}}</b></span>
+      </div>
 
-    <div class=""
-      *ngIf="borrelDealsTotalPrice !== 0"
-      fxLayout fxLayoutAlign="space-between">
-      <span>Korting Borrel Deal
-        <mat-icon class="info-icon" (click)="openBorrelDealInfo()">info</mat-icon>
-        <span>({{ borrelDeals }} X)</span>
-      </span>
-      <span><b>- {{borrelDealsTotalPrice | currency:"EUR"}}</b></span>
-    </div>
+      <div class=""
+        *ngIf="borrelDealsTotalPrice !== 0"
+        fxLayout fxLayoutAlign="space-between">
+        <span>Korting Borrel Deal
+          <mat-icon class="info-icon" (click)="openBorrelDealInfo()">info</mat-icon>
+          <span>({{ borrelDeals }} X)</span>
+        </span>
+        <span><b>- {{borrelDealsTotalPrice | currency:"EUR"}}</b></span>
+      </div>
 
-    <div class=""
-      *ngIf="borrelDealsTotalPrice !== 0"
-      fxLayout fxLayoutAlign="space-between">
-      <span>Totaal</span>
-      <span><b>{{orderTotal - maaltijdDealsTotalPrice - borrelDealsTotalPrice | currency:"EUR"}}</b></span>
-    </div>
+      <div class=""
+        *ngIf="borrelDealsTotalPrice !== 0"
+        fxLayout fxLayoutAlign="space-between">
+        <span>Totaal</span>
+        <span><b>{{orderTotal - maaltijdDealsTotalPrice - borrelDealsTotalPrice | currency:"EUR"}}</b></span>
+      </div>
 
-  </mat-card>
-</div>
-<div class="section">
-  <app-order-form></app-order-form>
+    </mat-card>
+  </div>
+  <div class="section">
+    <app-order-form></app-order-form>
+  </div>
 </div>

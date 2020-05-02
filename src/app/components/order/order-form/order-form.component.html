@@ -1,5 +1,4 @@
 <div>
-  <div *ngIf="waiting" class="loader">Loading...</div>
 
   <!-- <section
   fxLayout="row"
@@ -7,7 +6,11 @@
   *ngIf="!waiting"> -->
   <!-- <div class="wrap"> -->
   <mat-card>
-    <form [formGroup]="orderInfoForm" fxLayout="column" fxLayoutAlign="center">
+    <form
+      [formGroup]="orderInfoForm"
+      fxLayout="column"
+      fxLayoutAlign="center"
+      (ngSubmit)="sendOrder()">
 
       <mat-form-field>
         <input type="text"
@@ -55,11 +58,22 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <button
-        mat-raised-button color="primary"
-        type="submit">
-        SUBMIT
-      </button>
+      <div class="button-container" fxLayout fxLayoutAlign="space-between">
+        <button
+          class="bestel-button"
+          mat-raised-button color="primary"
+          type="submit">
+          BESTEL
+        </button>
+        <button
+          class="cancel-button"
+          mat-raised-button color="warn"
+          type="button"
+          (click)="onCancel()">
+          CANCEL
+        </button>
+      </div>
+
     </form>
   </mat-card>
 </div>

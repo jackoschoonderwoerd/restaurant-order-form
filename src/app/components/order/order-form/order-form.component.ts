@@ -5,6 +5,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { OrderService } from '../order.service'
 import { FinalizeErrorDialogComponent } from '../finalize-error-dialog/finalize-error-dialog.component';
 import { FinalizeOrderDialogComponent } from '../finalize-order-dialog/finalize-order-dialog.component';
+import { CoursesService } from '../../courses/courses.service';
+import { Menu } from 'src/app/models/menu.model';
+import { CourseItem } from 'src/app/models/courseItem.model';
+import { OrderInfo } from 'src/app/models/order-info.model';
+import { CompletedOrder } from 'src/app/models/completed-order.model';
 
 @Component({
   selector: 'app-order-form',
@@ -13,7 +18,7 @@ import { FinalizeOrderDialogComponent } from '../finalize-order-dialog/finalize-
 })
 export class OrderFormComponent implements OnInit {
 
-  
+
 
   // orders: CoffeeOrder[] = [];
   totalPrice = 0
@@ -21,74 +26,69 @@ export class OrderFormComponent implements OnInit {
   orderInfoFormValue;
   minDate: Date;
   maxDate: Date;
-  afhaalMomenten: string[] = [];
+  afhaalMomenten: string[] = ['16:00 - 1800'];
   // orderInfo: OrderInfo;
   // orderButtonDisabled: boolean = this.orders.length === 0;
-  waiting = false;
 
   constructor(
     private orderService: OrderService,
     private fb: FormBuilder,
     // private afhaalMomentenService: AfhaalMomentenService,
     private dialog: MatDialog,
-    private router: Router) {
-      
-    }
+    private router: Router,
+    private coursesService: CoursesService) {
+
+  }
   ngOnInit(): void {
-    // console.log(this.orders.length <= 0)
-    // this.afhaalMomenten = this.afhaalMomentenService.getAfhaalMomenten();
+    this.initForm();
+    if (this.orderService.checkLocalstorageForOrderInfo()) {
+      const orderFormInfo = this.orderService.checkLocalstorageForOrderInfo();
+      this.orderInfoForm.patchValue({
+        name: orderFormInfo.name,
+        phone: orderFormInfo.phone,
+        pickupDate: orderFormInfo.pickupDate,
+        pickupTime: orderFormInfo.pickupTime
+      });
+    }
 
-    // this.orderInfoFormValue = this.orderService.getOrderFormInfoValue();
-    // this.orderService.OrderInfoFormValueEmitter.subscribe(
-    //   ((orderInfoFormValue: OrderInfo) => {
-    //     this.orderInfoFormValue = orderInfoFormValue;
-    //   })
-    // );
-    
 
-    // this.totalPrice = this.orderService.calculateTotalPrice();
-    // this.orderService.totalPriceChangedEmitter.subscribe(
-    //   ((totalPrice: number) => {
-    //     this.totalPrice = totalPrice;
-    //   })
-    // );
-
-    // this.orders = this.orderService.getOrders();
-    // this.orderService.ordersEmitter.subscribe((orders: CoffeeOrder[]) => {
-    //   this.orders = orders;
-    // })
 
     const today = new Date()
     this.minDate = today;
     this.maxDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 6);
 
-    this.initForm();
   }
 
   orderInfoFormChanged() {
-    // this.orderService.storeOrderInfoFormValue(this.orderInfoForm.value)
+    this.orderService.storeOrderInfoFormValue(this.orderInfoForm.value)
   }
 
   private initForm() {
     this.orderInfoForm = this.fb.group({
-      name: new FormControl(null, [Validators.required]),
+      // name: new FormControl(null, [Validators.required]),
+      // phone: new FormControl(null),
+      // pickupDate: new FormControl(undefined, [Validators.required]),
+      // pickupTime: new FormControl(null, [Validators.required]),
+      // stamps: new FormControl(null)
+      name: new FormControl(null),
       phone: new FormControl(null),
-      pickupDate: new FormControl(undefined, [Validators.required]),
-      pickupTime: new FormControl(null, [Validators.required]),
-      stamps: new FormControl(null)
+      pickupDate: new FormControl(undefined),
+      pickupTime: new FormControl(null),
+      // stamps: new FormControl(null)
+
     });
-    if(this.orderInfoFormValue){
+    if (this.orderInfoFormValue) {
       console.log(this.orderInfoFormValue);
-      this.orderInfoForm.setValue({
+      this.orderInfoForm.patchValue({
         name: this.orderInfoFormValue.name,
         phone: this.orderInfoFormValue.phone,
-        pickupDate: this.orderInfoFormValue.pickupDate, 
+        pickupDate: this.orderInfoFormValue.pickupDate,
         pickupTime: this.orderInfoFormValue.pickupTime,
-        
+
       });
-        
+
     } else {
-      // console.log('NO orderInfoFormValue found');
+      console.log('NO orderInfoFormValue found');
     }
   }
 
@@ -99,25 +99,37 @@ export class OrderFormComponent implements OnInit {
   // }
 
   sendOrder() {
-    this.waiting = true;
-    // this.orderService.postFinalOrder(this.orderInfoForm.value).subscribe(
-    //   (res: any) => {
-    //     if(res.errorMessage) {
-    //       this.waiting = false;
-    //       this.dialog.open(FinalizeErrorDialogComponent, {data: {errorMessage: res.errorMessage}});
-    //     } else {
-    //       console.log(res);
-    //       this.waiting = false;
-    //       this.dialog.open(FinalizeOrderDialogComponent);
-    //       this.ClearOrder()
-    //       this.router.navigate(['/home'])
-    //     }
-    //   }
-    // ); 
+    const menu = this.coursesService.getMenu('cenc');
+    const sortedMenu = this.sortMenu(menu);
+    const orderInfoFormValue = this.orderInfoForm.value;
+
+    const orderInfo = new OrderInfo(
+      orderInfoFormValue.name,
+      orderInfoFormValue.phone,
+      orderInfoFormValue.pickupDate,
+      orderInfoFormValue.pickupTime,
+    );
+    const completedOrder = new CompletedOrder(orderInfo, sortedMenu);
+    this.orderService.postFinalOrder(completedOrder); 
+  }
+
+  onCancel() {
+
+  }
+
+  private sortMenu(menu: Menu) {
+    let sortedMenu = new Menu(menu.courses.filter((course) =>
+      course.courseItems.some((courseItem) => courseItem.amount !== 0))
+      .map(element => {
+        let newElt = Object.assign({}, element); // copies element
+        newElt.courseItems = newElt.courseItems.filter(courseItem => courseItem.amount !== 0);
+        return newElt;
+      }));
+    return sortedMenu
   }
 
   private ClearOrder() {
-    this.orderService.deleteOrder();
+
     this.orderInfoForm.reset();
   }
 
@@ -132,12 +144,7 @@ export class OrderFormComponent implements OnInit {
     return day !== 0;
   }
 
-
-  // deleteOrderItem(orderItemIndexindex: number) {
-  //   this.orderService.deleteOrderItem(orderItemIndexindex);
-  // }
   checkboxChange() {
     console.log('checkboxChange()');
   }
-
 }
