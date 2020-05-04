@@ -14,7 +14,7 @@ export class CourseItemInfoDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.courseItem = this.passedData.courseItem
-    console.log(this.courseItem.name);
+    console.log(this.courseItem);
   }
 
 }

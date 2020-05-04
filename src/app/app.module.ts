@@ -32,6 +32,8 @@ import { CourseItemInfoDialogComponent } from './components/courses/course-item/
 import { MaaltijddealInfoDialogComponent } from './components/order/maaltijddeal-info-dialog/maaltijddeal-info-dialog.component';
 import { BorreldealInfoDialogComponent } from './components/order/borreldeal-info-dialog/borreldeal-info-dialog.component';
 import { HttpClientModule } from '@angular/common/http';
+import { OrderSentDialogComponent } from './components/order/order-sent-dialog/order-sent-dialog.component';
+import { CancelOrderDialogComponent } from './components/order/order-form/cancel-order-dialog/cancel-order-dialog.component';
 
 
 
@@ -67,6 +69,9 @@ import { HttpClientModule } from '@angular/common/http';
     
     MaaltijddealInfoDialogComponent,
     BorreldealInfoDialogComponent,
+    OrderSentDialogComponent,
+    CancelOrderDialogComponent,
+
 
   ],
   providers: [],

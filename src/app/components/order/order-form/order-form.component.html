@@ -58,13 +58,25 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <mat-label>OPMERKINGEN</mat-label>
+        <textarea
+          matInput
+          placeholder=""
+          formControlName="comments">
+        </textarea>
+      </mat-form-field>
+
       <div class="button-container" fxLayout fxLayoutAlign="space-between">
         <button
           class="bestel-button"
           mat-raised-button color="primary"
-          type="submit">
+          type="submit"
+          [disabled]="orderInfoForm.invalid">
           BESTEL
         </button>
+        <div class="filler-h-20"></div>
         <button
           class="cancel-button"
           mat-raised-button color="warn"

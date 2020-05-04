@@ -61,7 +61,14 @@ export class OrderComponent implements OnInit {
     this.menu = this.coursesService.getMenu('companyName');
     this.menu.courses.forEach(course => {
       this.courses.push(course);
-    })
+    });
+    this.orderService.orderCancelledSubscription.subscribe(() => {
+      this.orderTotal = 0;
+      this.maaltijdDeals = 0;
+      this.borrelDeals = 0;
+      this.maaltijdDealsTotalPrice = 0;
+      this.borrelDealsTotalPrice = 0;
+    });
   }
 
   getOrderTotal() {

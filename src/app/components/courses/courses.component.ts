@@ -9,6 +9,7 @@ import { FormGroup } from '@angular/forms';
 // import { QuestionBase } from 'src/app/form-stuff/question-base';
 import { MatDialog } from '@angular/material/dialog';
 import { AddFinalizeComponent } from './add-finalize/add-finalize.component';
+import { OrderService } from '../order/order.service';
 
 @Component({
   selector: 'app-courses',
@@ -22,7 +23,8 @@ export class CoursesComponent implements OnInit {
     private route: ActivatedRoute,
     private cdr: ChangeDetectorRef,
     // private qcs: QuestionControlService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private orderService: OrderService
     ) { }
 
   course: Course;
@@ -46,6 +48,9 @@ export class CoursesComponent implements OnInit {
         this.courseTotal = courseTotal;
       })
     );
+    this.orderService.orderStatusChanged.subscribe(() => {
+      this.coursesService.getMenu('cenc');
+    })
   }
   onNaarBestellijst() {
     this.dialog.open(AddFinalizeComponent)

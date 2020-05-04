@@ -20,4 +20,15 @@ td {
     cursor: pointer;
 }
 
+/* .visibility-hidden {
+    visibility: hidden;
+    height: 1px;
+    padding: 0px;
+    margin: 0px;
+} */
+
+mat-card {
+    padding: 10px;
+}
+
 

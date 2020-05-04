@@ -1,9 +1,8 @@
-<div>
-  <div class="card-container">
-    <div class="course-name-container">
-      <h3>{{courseName}}</h3>
-    </div>
-    <mat-card>
+
+    <mat-card class="course-item-card">
+      <div class="course-name-container">
+        <h3>{{courseName}}</h3>
+      </div>
       <div *ngFor="let courseItem of courseItems" class="course-item">
         <app-course-item
           [courseItem]="courseItem"
@@ -11,23 +10,21 @@
         </app-course-item>
       </div>
       <div *ngIf="courseTotal !== 0" class="course-total-container"><b>
-        <div class="filler-h-40"></div>
-        <div fxLayout fxLayoutAlign="space-between">
+        <div class="filler-h-55"></div>
+        <div class="totaal-maaltijden" fxLayout fxLayoutAlign="space-between">
           <span>Totaal {{courseName}}</span>
           <span>{{courseTotal | currency:"EUR"}}</span>
         </div></b>
       </div>
-     
-      <!-- <table class="fixed-table">
-        <td class="first-column">Total</td>
-        <td align="right" class="second-column">{{courseTotal | currency:"EUR"}}</td>
-      </table> -->
       <button
-        class="naar-bestellijst"
+        class="naar-bestellijst-button"
         mat-raised-button color="primary"
         (click)="onNaarBestellijst()">
         NAAR AAN BESTELLIJST
       </button>
     </mat-card>
-  </div>
-</div>
+    <!-- <mat-card class="visibility-hidden">
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem dolor
+    </mat-card> -->
+  
+

@@ -1,27 +1,16 @@
-/* tr {
-  vertical-align: top;
+.first {
+  background-color: pink;
+  display: flex;
 }
-
-
-.item-select {
-  width: 35px
+.second {
+  background-color: green;
+  width: 200px;
+  /* height: 200px; */
 }
-.item-name {
-  width: 128px
+mat-card {
+  width: 100%;
+  display: flex;
 }
-.item-price {
-  width: 60px
+.lorem {
+  visibility: hidden;
 }
-.item-total {
-  width: 60px
-}
-mat-icon {
-  margin-bottom: 0px;
-}
-.mat-icon-container {
-  padding: 0px;
-}
-select{
-  margin: 0px;
-  padding: 0px;
-} */
