@@ -48,6 +48,14 @@ export class CoursesService {
     }
     return this.menu;
   }
+  resetMenu() {
+    console.log('resetMenu() called')
+    this.menu.courses.forEach(course => {
+      course.courseItems.forEach(courseItem => {
+        courseItem.amount = 0;
+      })
+    })
+  }
 
   getCourseNames() {
     if(this.courseNames = []) {

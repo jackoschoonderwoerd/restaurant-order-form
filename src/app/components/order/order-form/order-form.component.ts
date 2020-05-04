@@ -10,6 +10,7 @@ import { Menu } from 'src/app/models/menu.model';
 import { CourseItem } from 'src/app/models/courseItem.model';
 import { OrderInfo } from 'src/app/models/order-info.model';
 import { CompletedOrder } from 'src/app/models/completed-order.model';
+import { CancelOrderDialogComponent } from './cancel-order-dialog/cancel-order-dialog.component';
 
 @Component({
   selector: 'app-order-form',
@@ -26,7 +27,16 @@ export class OrderFormComponent implements OnInit {
   orderInfoFormValue;
   minDate: Date;
   maxDate: Date;
-  afhaalMomenten: string[] = ['16:00 - 1800'];
+  afhaalMomenten: string[] = [
+    '16:00 - 16:30',
+    '16:30 - 17:00',
+    '17:00 - 17:30',
+    '17:30 - 18:00', 
+    '18:00 - 18:30', 
+    '18:30 - 19:00', 
+    '19:00 - 19:30',
+    '19:30 - 20:00'
+  ];
   // orderInfo: OrderInfo;
   // orderButtonDisabled: boolean = this.orders.length === 0;
 
@@ -47,9 +57,14 @@ export class OrderFormComponent implements OnInit {
         name: orderFormInfo.name,
         phone: orderFormInfo.phone,
         pickupDate: orderFormInfo.pickupDate,
-        pickupTime: orderFormInfo.pickupTime
+        pickupTime: orderFormInfo.pickupTime,
+        comments: orderFormInfo.comments
       });
     }
+    this.orderService.orderStatusChanged.subscribe(() => {
+      localStorage.clear();
+      this.orderInfoForm.reset();
+    });
 
 
 
@@ -65,16 +80,11 @@ export class OrderFormComponent implements OnInit {
 
   private initForm() {
     this.orderInfoForm = this.fb.group({
-      // name: new FormControl(null, [Validators.required]),
-      // phone: new FormControl(null),
-      // pickupDate: new FormControl(undefined, [Validators.required]),
-      // pickupTime: new FormControl(null, [Validators.required]),
-      // stamps: new FormControl(null)
-      name: new FormControl(null),
+      name: new FormControl(null, [Validators.required]),
       phone: new FormControl(null),
-      pickupDate: new FormControl(undefined),
-      pickupTime: new FormControl(null),
-      // stamps: new FormControl(null)
+      pickupDate: new FormControl(undefined, [Validators.required]),
+      pickupTime: new FormControl(null, [Validators.required]),
+      comments: new FormControl(null)
 
     });
     if (this.orderInfoFormValue) {
@@ -84,19 +94,12 @@ export class OrderFormComponent implements OnInit {
         phone: this.orderInfoFormValue.phone,
         pickupDate: this.orderInfoFormValue.pickupDate,
         pickupTime: this.orderInfoFormValue.pickupTime,
-
       });
 
     } else {
       console.log('NO orderInfoFormValue found');
     }
   }
-
-  // orderMore() {
-  //   this.dialog.open(OrderMoreDialogComponent, {
-  //     width: '350px'
-  //   });
-  // }
 
   sendOrder() {
     const menu = this.coursesService.getMenu('cenc');
@@ -108,13 +111,22 @@ export class OrderFormComponent implements OnInit {
       orderInfoFormValue.phone,
       orderInfoFormValue.pickupDate,
       orderInfoFormValue.pickupTime,
+      orderInfoFormValue.comments
     );
     const completedOrder = new CompletedOrder(orderInfo, sortedMenu);
     this.orderService.postFinalOrder(completedOrder); 
   }
 
   onCancel() {
-
+    const dialogRef = this.dialog.open(CancelOrderDialogComponent);
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result){
+        localStorage.clear();
+        this.orderInfoForm.reset();
+        this.orderService.cancelOrder();
+      }
+    });
+    
   }
 
   private sortMenu(menu: Menu) {

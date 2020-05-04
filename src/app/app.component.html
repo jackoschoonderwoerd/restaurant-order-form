@@ -1,7 +1,55 @@
-<!-- <div class="main-container" fxLayout="row" fxLayoutAlign="center center"> -->
+<div class="bonus" fxLayout="row" fxLayoutAlign="center">
+  <div class="main-container">
+    <!-- <div class="main-container"> -->
+    <mat-sidenav-container>
+      <mat-sidenav #sidenav role="navigation">
+        <app-sidenav (sidenavToggle)="sidenav.toggle()"></app-sidenav>
+      </mat-sidenav>
+      <!-- <mat-sidenav-content fxLayout="row" fxLayoutAlign="center"> -->
+      <mat-sidenav-content>
+
+        <div
+          class="header-outlet-container">
+          <app-header (sidenavToggle)="sidenav.toggle()"></app-header>
+          <main>
+            <div class="loader" *ngIf="loadingStatus">Loading.....</div>
+            <router-outlet *ngIf="!loadingStatus"></router-outlet>
+          </main>
+          <div class="visibility-hidden">
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eum sequi, omnis labore distinctio minima totam
+            reprehenderit laborum, quam laboriosam
+          </div>
+        </div>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  </div>
+</div>
 
 
-<div class="main-container" fxLayout fxLayoutAlign="center">
+<!-- <div class="main-container" fxLayout fxLayoutAlign="center">
+  <mat-sidenav-container>
+    <mat-sidenav #sidenav role="navigation">
+      <app-sidenav (sidenavToggle)="sidenav.toggle()"></app-sidenav>
+    </mat-sidenav>
+    <mat-sidenav-content fxLayout="row" fxLayoutAlign="center">
+      
+      <div
+        class="header-outlet-container">
+        <app-header (sidenavToggle)="sidenav.toggle()"></app-header>
+        <main>
+          <div class="loader" *ngIf="loadingStatus">Loading.....</div>
+          <router-outlet *ngIf="!loadingStatus"></router-outlet>
+        </main>
+        <div class="visibility-hidden">
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eum sequi, omnis labore distinctio minima totam reprehenderit laborum, quam laboriosam 
+        </div>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div> -->
+
+
+<!-- <div class="main-container"  fxLayout fxLayoutAlign="center">
   <mat-sidenav-container>
     <mat-sidenav #sidenav role="navigation">
       <app-sidenav (sidenavToggle)="sidenav.toggle()"></app-sidenav>
@@ -9,14 +57,8 @@
     <mat-sidenav-content>
       <app-header (sidenavToggle)="sidenav.toggle()"></app-header>
       <main fxLayout="column" fxLayoutAlign="center center">
-        <router-outlet *ngIf="!loadingStatus"></router-outlet>
+        <router-outlet></router-outlet>
       </main>
     </mat-sidenav-content>
   </mat-sidenav-container>
-</div>
-
-<!-- </div> -->
-<!-- <div>
-    <h2>C & C</h2>
-    <app-dynamic-form [questions]="questions$ | async"></app-dynamic-form>
 </div> -->

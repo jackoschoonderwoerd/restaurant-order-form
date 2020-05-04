@@ -7,5 +7,6 @@ export class OrderInfo {
         public phone: string,
         public pickupDate: Date,
         public pickupTime: string,
+        public comments: string
     ) { }
 }
