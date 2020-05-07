@@ -16,44 +16,46 @@
         </button>
       </div> -->
     </mat-card>
-
+    
     <mat-card>
       <div
         class=""
         *ngIf="orderTotal === 0">NOG NIETS GEKOZEN
       </div>
-      <div *ngIf="orderTotal !== 0"
+      <div *ngIf="orderTotal !== 0 && orderTotal !== undefined"
         fxLayout fxLayoutAlign="space-between">
         <span>Totaal:</span><span><b>{{orderTotal | currency:"EUR"}}</b></span>
       </div>
+      
+      
       <div class=""
-        *ngIf="maaltijdDealsTotalPrice !== 0"
+        *ngIf="maaltijdDealsTotalPrice !== 0 && maaltijdDealsTotalPrice !== undefined"
         fxLayout fxLayoutAlign="space-between">
         <span>Korting Maaltijd Deal
           <mat-icon class="info-icon" (click)="openMaatijdDealInfo()">info</mat-icon>
-          <span>({{maaltijdDeals}} X)</span>
+          <span>({{maaltijdDealsTotalAmount}} X)</span>
         </span>
         <span><b>- {{maaltijdDealsTotalPrice | currency:"EUR"}}</b></span>
       </div>
       <div class=""
-        *ngIf="maaltijdDealsTotalPrice !== 0"
+        *ngIf="maaltijdDealsTotalPrice !== 0 && maaltijdDealsTotalPrice !== undefined"
         fxLayout fxLayoutAlign="space-between">
         <span>Totaal</span>
         <span><b>{{orderTotal - maaltijdDealsTotalPrice | currency:"EUR"}}</b></span>
       </div>
 
       <div class=""
-        *ngIf="borrelDealsTotalPrice !== 0"
+        *ngIf="borrelDealsTotalPrice !== 0 && borrelDealsTotalPrice !== undefined"
         fxLayout fxLayoutAlign="space-between">
         <span>Korting Borrel Deal
           <mat-icon class="info-icon" (click)="openBorrelDealInfo()">info</mat-icon>
-          <span>({{ borrelDeals }} X)</span>
+          <span>({{ borrelDealsTotalAmount }} X)</span>
         </span>
         <span><b>- {{borrelDealsTotalPrice | currency:"EUR"}}</b></span>
       </div>
 
       <div class=""
-        *ngIf="borrelDealsTotalPrice !== 0"
+        *ngIf="borrelDealsTotalPrice !== 0 && borrelDealsTotalPrice !== undefined"
         fxLayout fxLayoutAlign="space-between">
         <span>Totaal</span>
         <span><b>{{orderTotal - maaltijdDealsTotalPrice - borrelDealsTotalPrice | currency:"EUR"}}</b></span>

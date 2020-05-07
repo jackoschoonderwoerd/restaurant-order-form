@@ -1,7 +1,7 @@
 
     <mat-card class="course-item-card">
       <div class="course-name-container">
-        <h3>{{courseName}}</h3>
+        <h3>{{courseName | titlecase }}</h3>
       </div>
       <div *ngFor="let courseItem of courseItems" class="course-item">
         <app-course-item

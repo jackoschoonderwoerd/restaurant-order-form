@@ -34,6 +34,7 @@ import { BorreldealInfoDialogComponent } from './components/order/borreldeal-inf
 import { HttpClientModule } from '@angular/common/http';
 import { OrderSentDialogComponent } from './components/order/order-sent-dialog/order-sent-dialog.component';
 import { CancelOrderDialogComponent } from './components/order/order-form/cancel-order-dialog/cancel-order-dialog.component';
+import { NietInGebruikDialogComponent } from './niet-in-gebruik-dialog/niet-in-gebruik-dialog.component';
 
 
 
@@ -71,6 +72,7 @@ import { CancelOrderDialogComponent } from './components/order/order-form/cancel
     BorreldealInfoDialogComponent,
     OrderSentDialogComponent,
     CancelOrderDialogComponent,
+    NietInGebruikDialogComponent,
 
 
   ],

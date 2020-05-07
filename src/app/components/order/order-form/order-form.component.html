@@ -30,6 +30,14 @@
       </mat-form-field>
 
       <mat-form-field>
+        <input type="text"
+          matInput placeholder="EMAIL"
+          formControlName="email"
+          #emailInput
+          (change)="orderInfoFormChanged()">
+      </mat-form-field>
+
+      <mat-form-field>
         <input
           matInput [min]="minDate"
           [max]="maxDate"

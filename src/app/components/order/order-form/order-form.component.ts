@@ -11,6 +11,7 @@ import { CourseItem } from 'src/app/models/courseItem.model';
 import { OrderInfo } from 'src/app/models/order-info.model';
 import { CompletedOrder } from 'src/app/models/completed-order.model';
 import { CancelOrderDialogComponent } from './cancel-order-dialog/cancel-order-dialog.component';
+import { Discounts } from 'src/app/models/discounts.model';
 
 @Component({
   selector: 'app-order-form',
@@ -80,10 +81,17 @@ export class OrderFormComponent implements OnInit {
 
   private initForm() {
     this.orderInfoForm = this.fb.group({
-      name: new FormControl(null, [Validators.required]),
+      // name: new FormControl(null, [Validators.required]),
+      // phone: new FormControl(null),
+      // pickupDate: new FormControl(undefined, [Validators.required]),
+      // pickupTime: new FormControl(null, [Validators.required]),
+      // comments: new FormControl(null)
+
+      name: new FormControl('jacko'),
       phone: new FormControl(null),
-      pickupDate: new FormControl(undefined, [Validators.required]),
-      pickupTime: new FormControl(null, [Validators.required]),
+      email: new FormControl('jackoboes@gmail.com'),
+      pickupDate: new FormControl(undefined),
+      pickupTime: new FormControl(null),
       comments: new FormControl(null)
 
     });
@@ -95,9 +103,6 @@ export class OrderFormComponent implements OnInit {
         pickupDate: this.orderInfoFormValue.pickupDate,
         pickupTime: this.orderInfoFormValue.pickupTime,
       });
-
-    } else {
-      console.log('NO orderInfoFormValue found');
     }
   }
 
@@ -109,11 +114,15 @@ export class OrderFormComponent implements OnInit {
     const orderInfo = new OrderInfo(
       orderInfoFormValue.name,
       orderInfoFormValue.phone,
+      orderInfoFormValue.email,
       orderInfoFormValue.pickupDate,
       orderInfoFormValue.pickupTime,
       orderInfoFormValue.comments
     );
-    const completedOrder = new CompletedOrder(orderInfo, sortedMenu);
+    const discounts = new Discounts([])
+    const orderTotalPrice = this.coursesService.calculateOrderTotal()
+    const destination = 'kitchen'
+    const completedOrder = new CompletedOrder(orderInfo, sortedMenu, orderTotalPrice, discounts, destination);
     this.orderService.postFinalOrder(completedOrder); 
   }
 

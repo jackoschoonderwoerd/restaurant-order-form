@@ -10,6 +10,7 @@ import { AddFinalizeComponent } from '../courses/add-finalize/add-finalize.compo
 
 import { MaaltijddealInfoDialogComponent } from './maaltijddeal-info-dialog/maaltijddeal-info-dialog.component';
 import { BorreldealInfoDialogComponent } from './borreldeal-info-dialog/borreldeal-info-dialog.component';
+import { DiscountService } from 'src/app/services/discount.service';
 
 
 @Component({
@@ -26,12 +27,13 @@ export class OrderComponent implements OnInit {
   totalItemPrice: number  = 0;
   soepTotal = 0;
   menu
-  orderTotal;
+  orderTotal: number = 0;
   orderTotalAfterDiscount;
   maaltijdDeals;
   maaltijdDealsTotalPrice;
-  borrelDeals;
-  borrelDealsTotalPrice;
+  maaltijdDealsTotalAmount;
+  borrelDealsTotalAmount;
+  borrelDealsTotalPrice: number = 0;
   discount;
   loadingStatus: boolean = false;
   constructor(
@@ -39,25 +41,26 @@ export class OrderComponent implements OnInit {
     private orderService: OrderService,
     private coursesService: CoursesService,
     private router: Router,
-    private dialog: MatDialog) { }
+    private dialog: MatDialog,
+    private discountService: DiscountService) { }
   
   orderItems = [
     'soep',
     'borrelhapjes'
   ];
   
+  discounts: [] = []
 
   finalPrice: number = 0;
 
   ngOnInit(): void {
     this.orderService.loadingStatusChanged.subscribe((loadingStatus: boolean) => {
       this.loadingStatus = loadingStatus;
-      console.log(this.loadingStatus)
     });
-    console.log('this.loadingStatus: ', this.loadingStatus)
+    console.log(this.discountService.getDiscount());
     this.getOrderTotal();
-    this.calculateMaaltijdDeals();
-    this.calculateBorrelDeals();
+    this.getMaaltijdDealsTotalPrice();
+    this.getBorrelDealsTotalPrice();
     this.menu = this.coursesService.getMenu('companyName');
     this.menu.courses.forEach(course => {
       this.courses.push(course);
@@ -65,11 +68,14 @@ export class OrderComponent implements OnInit {
     this.orderService.orderCancelledSubscription.subscribe(() => {
       this.orderTotal = 0;
       this.maaltijdDeals = 0;
-      this.borrelDeals = 0;
+      this.borrelDealsTotalAmount = 0;
       this.maaltijdDealsTotalPrice = 0;
       this.borrelDealsTotalPrice = 0;
     });
   }
+
+  
+ 
 
   getOrderTotal() {
     this.orderTotal = this.coursesService.calculateOrderTotal();
@@ -79,37 +85,24 @@ export class OrderComponent implements OnInit {
     this.dialog.open(AddFinalizeComponent)
   }
 
-  calculateMaaltijdDeals() {  //calculate maaltijdDeals  
-    const maaltijdDealsSum = 2; //euro
+  getMaaltijdDealsTotalPrice() {
     const orderedMeals = this.coursesService.orderedItemsCount('maaltijden');
-    let orderedWine = this.coursesService.orderedItemsCount('wijn')
-    this.maaltijdDealsTotalPrice = 0
-    if (orderedMeals >= 2) {
-      const maxWines = orderedMeals / 2;
-      if(orderedWine >= maxWines) {
-        // orderedWine = Math.floor(maxWines)
-        this.maaltijdDeals = Math.floor(maxWines)
-        this.maaltijdDealsTotalPrice = Math.floor(this.maaltijdDeals) * maaltijdDealsSum;
-      }
-    } 
-    return this.maaltijdDealsTotalPrice
+    const orderedWines = this.coursesService.orderedItemsCount('wijn');
+    this.maaltijdDealsTotalPrice = this.orderService.returnMaaltijdDealsTotalPriceAndTotalAmount(orderedMeals, orderedWines).totalPrice;
+    this.maaltijdDealsTotalAmount = this.orderService.returnMaaltijdDealsTotalPriceAndTotalAmount(orderedMeals, orderedWines).totalAmount;
   }
-  
-  calculateBorrelDeals() {
-    const borreldealsSum = 1; //euro
+
+  getBorrelDealsTotalPrice() {
     const orderedBeers = this.coursesService.orderedItemsCount('bier');
-    let orderedBorrelhapjes = this.coursesService.orderedItemsCount('borrelhapjes');
-    this.borrelDealsTotalPrice = 0;
-    if(orderedBeers >= 2) {
-      const maxBorrelHapjes = orderedBeers / 2;
-      if(orderedBorrelhapjes >= maxBorrelHapjes) {
-        // orderedBorrelhapjes = Math.floor(maxBorrelHapjes);
-        this.borrelDeals = Math.floor(maxBorrelHapjes);
-        this.borrelDealsTotalPrice = Math.floor(this.borrelDeals) * borreldealsSum;
-      }
-    }
-    return this.borrelDealsTotalPrice;
+    const orderedBorrelhapjes = this.coursesService.orderedItemsCount('borrelhapjes');
+    this.borrelDealsTotalAmount = this.orderService.returnBorrelDealsTotalPriceAndTotalAmount(orderedBorrelhapjes, orderedBeers).totalAmount;
+    this.borrelDealsTotalPrice = this.orderService.returnBorrelDealsTotalPriceAndTotalAmount(orderedBorrelhapjes, orderedBeers).totalPrice;
+    console.log(this.borrelDealsTotalAmount, this.borrelDealsTotalPrice);
   }
+
+  
+
+
   openBorrelDealInfo() {
     this.dialog.open(BorreldealInfoDialogComponent);
   }

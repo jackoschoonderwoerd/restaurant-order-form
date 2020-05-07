@@ -1,10 +1,11 @@
-<div fxLayout fxLayoutAlign="space-between">
-  <h4 mat-dialog-title>{{courseItem.name}}</h4>
-  <mat-icon mat-dialog-close>close</mat-icon>
-</div>
-<mat-dialog-content mat-dialog-close>
+<h3 mat-dialog-title>{{courseItem.name | titlecase }}</h3>
+<mat-dialog-content>
   <div class="courseItem-description">{{courseItem.description}}</div>
   <div class="image-container">
     <img [src]="courseItem.imageUrl" alt="">
   </div>
 </mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-dialog-close><mat-icon>close</mat-icon></button>
+</mat-dialog-actions>
+

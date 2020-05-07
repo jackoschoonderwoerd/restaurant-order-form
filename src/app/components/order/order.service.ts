@@ -6,6 +6,10 @@ import { CompletedOrder } from 'src/app/models/completed-order.model';
 import { MatDialog } from '@angular/material/dialog';
 import { OrderSentDialogComponent } from './order-sent-dialog/order-sent-dialog.component';
 import { Router } from '@angular/router';
+import { Discount } from 'src/app/models/discount.model';
+import { compileDirectiveFromRender2 } from '@angular/compiler/src/render3/view/compiler';
+import { Discounts } from 'src/app/models/discounts.model';
+import { combineLatest } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,9 +18,14 @@ export class OrderService {
 
   orderedItems;
   soepOrders;
+  totalMaaltijdDiscountPrice: number;
+  totalBorrelhapjesDiscountPrice: number;
   loadingStatusChanged = new EventEmitter<boolean>();
   orderStatusChanged = new EventEmitter<void>();
   orderCancelledSubscription = new EventEmitter<void>();
+  borrelDeals: number = 0;
+  maaltijdDeals: number = 0;
+  deals: number = 0;
 
   constructor(
     private http: HttpClient,
@@ -31,15 +40,70 @@ export class OrderService {
     return this.coursesSevice.getMenu('cenc')
   }
 
+  returnMaaltijdDealsTotalPriceAndTotalAmount(orderedMeals, orderedWines) {
+    // console.log('orderedMeals:', orderedMeals, 'orderedWines: ', orderedWines);
+    const discount = 2; // euro
+    
+    if(orderedMeals >= 2) {
+      // console.log('orderedMeals:', orderedMeals)
+      const maxDeals = Math.floor(orderedMeals / 2)
+      // console.log('maxDeals:', maxDeals);
+      if(orderedWines >= maxDeals) {
+        // console.log('passed if')
+        this.maaltijdDeals = maxDeals;
+      } else {
+        this.maaltijdDeals = orderedWines
+      }
+      // console.log(this.deals, this.deals * discount)
+    }
+    this.totalMaaltijdDiscountPrice = this.maaltijdDeals * discount;
+    return new Discount('maaltijdDeals', this.maaltijdDeals, this.maaltijdDeals * discount);
+  }
+
+
+  returnBorrelDealsTotalPriceAndTotalAmount(orderedBorrelHapjes, orderedBeers) {
+    // console.log('orderedBorrelHapjes: ', orderedBorrelHapjes, 'orderedBeers: ', orderedBeers);
+    const discount = 1; // euro
+    // let totalBorrelhapjesDiscountPrice = 0;
+    const maxDeals = Math.floor(orderedBeers / 2)
+    if(orderedBorrelHapjes >= maxDeals) {
+      this.borrelDeals = maxDeals;
+    } else {
+      this.borrelDeals = orderedBorrelHapjes
+    }
+    // console.log(this.borrelDeals, this.borrelDeals * discount)
+    this.totalBorrelhapjesDiscountPrice = this.borrelDeals * discount;
+    return new Discount('borrelDeals', this.deals, this.borrelDeals * discount);
+
+  }
+
   postFinalOrder(completedOrder: CompletedOrder) {
+    const discounts = new Discounts([
+      new Discount('maaltijdDeals', this.maaltijdDeals, this.totalMaaltijdDiscountPrice),
+      new Discount('borrelDeals', this.borrelDeals, this.totalBorrelhapjesDiscountPrice)
+    ]);
+    // console.log(discountInfo);
+    // console.log(completedOrder);
+    // completedOrder.destination = 'kitchen';
+    completedOrder.discounts = discounts;
+    console.log(completedOrder);
     this.loadingStatusChanged.emit(true);
     this.http.post('https://65qdu0ddyk.execute-api.eu-central-1.amazonaws.com/dev/captein-en-co', completedOrder).subscribe(
       (data => {
-        console.log('data returned');
+        console.log(data);
+        completedOrder.orderInfo.email = data.toString();
+        completedOrder.destination = 'customer'
+        this.http.post('https://65qdu0ddyk.execute-api.eu-central-1.amazonaws.com/dev/captein-en-co', completedOrder).subscribe(
+          (data => {
+            console.log(data);
+          })
+        );
+        // const parsedData = JSON.stringify(data);
         this.loadingStatusChanged.emit(false);
+        // console.log(parsedData);
         this.orderStatusChanged.emit();
         this.dialog.open(OrderSentDialogComponent);
-        localStorage.clear();
+        // localStorage.clear();
         this.coursesSevice.resetMenu();
         this.router.navigate(['/home']);
       }),
@@ -53,11 +117,13 @@ export class OrderService {
     console.log(orderFormValue);
     localStorage.setItem('order-info', JSON.stringify(orderFormValue));
   }
+
   checkLocalstorageForOrderInfo() {
     if(localStorage.getItem('order-info')) {
       return JSON.parse(localStorage.getItem('order-info'))
     }
   }
+
   cancelOrder() {
     this.coursesSevice.resetMenu();
     this.orderCancelledSubscription.emit();

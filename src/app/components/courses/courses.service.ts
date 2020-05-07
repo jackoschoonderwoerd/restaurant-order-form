@@ -49,7 +49,6 @@ export class CoursesService {
     return this.menu;
   }
   resetMenu() {
-    console.log('resetMenu() called')
     this.menu.courses.forEach(course => {
       course.courseItems.forEach(courseItem => {
         courseItem.amount = 0;
@@ -157,21 +156,26 @@ export class CoursesService {
     // }
     return totalWijn;
   }
-  // calculateMeals() {
-  //   let totalMeals = 0
-  //   const menu = this.getMenu('');
-  //   // if(localStorage.getItem('orderedItems')) {
-  //     menu.courses.forEach(course => {
-  //       if(course.courseName === 'maaltijden') {
-  //         const mealsCourse = course;
-  //         mealsCourse.courseItems.forEach(courseItem => {
-  //           totalMeals = totalMeals + +courseItem.amount;
-  //         }) 
-  //       }
-  //     })
-    // }
-  //   return totalMeals;
-  // }
+
+  
+
+  getCourseItemsNamesPricesAmounts(): Array<{name: string, amount: number, price: number}> {
+    const collection = [];
+    // console.log(this.menu);
+    this.menu.courses.forEach(course => {
+      // console.log(course.courseName);
+      const name = course.courseName;
+      course.courseItems.forEach((courseItem: CourseItem) => {
+        // console.log(courseItem.price, courseItem.amount)
+        const price = courseItem.price;
+        const amount = courseItem.amount;
+        collection.push({name: name, price: price, amount: +amount})
+      })
+    })
+    // console.log(collection);
+    // return [{name: 'jacko', amount: 4, price: 5}, {name: 'karel', amount: 2, price: 3}]
+    return collection;
+  }
 
   orderedItemsCount(courseName) {
     let total = 0
