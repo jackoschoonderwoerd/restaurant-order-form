@@ -1,16 +1,3 @@
-.first {
-  background-color: pink;
-  display: flex;
-}
-.second {
-  background-color: green;
-  width: 200px;
-  /* height: 200px; */
-}
-mat-card {
-  width: 100%;
-  display: flex;
-}
-.lorem {
-  visibility: hidden;
+:root {
+  --custom-color: #fff
 }

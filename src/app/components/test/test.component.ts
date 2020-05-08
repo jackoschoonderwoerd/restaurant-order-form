@@ -1,51 +1,77 @@
 import { Component, OnInit } from '@angular/core';
 import { CoursesService } from '../courses/courses.service';
+import { OrderService } from '../order/order.service';
+import { CompletedOrder } from 'src/app/models/completed-order.model';
+import { OrderInfo } from 'src/app/models/order-info.model';
+import { Menu } from 'src/app/models/menu.model';
+import { Course } from 'src/app/models/course.model';
+import { CourseItem } from 'src/app/models/courseItem.model';
+import { Discounts } from 'src/app/models/discounts.model';
+import { Discount } from 'src/app/models/discount.model';
 
 
 @Component({
   selector: 'app-test',
-  templateUrl: 'test.component.html',
-  styleUrls: ['test.component.css']
+  template: ``,
+  templateUrl: 'test.component.html' ,
 })
 export class TestComponent implements OnInit {
 
-  arrayOfElements = [{
-    "name": "a",
-    "subElements": [{
-      "surname": 1
-    }, {
-      "surname": 2
-    }]
-  }, {
-    "name": "b",
-    "subElements": [{
-      "surname": 3
-    }, {
-      "surname": 1
-    }]
-  }, {
-    "name": "c",
-    "subElements": [{
-      "surname": 2
-    }, {
-      "surname": 5
-    }]
-  }];
+  numbers: [
+    1, 2, 3, 4
+  ]
 
-  constructor(private coursesService: CoursesService) { }
+  event = new CompletedOrder(
+    new OrderInfo(
+      'jacko',
+      'afhalen',
+      '123',
+      '1234',
+      '2@2',
+      new Date(),
+      '16:30',
+      'comments'
+    ),
+    new Menu(
+      [new Course(
+        'soep',
+        [new CourseItem(
+          'tomaten',
+          2.95,
+          '',
+          '',
+          3
+        )]
+      )]
+    ),
+    150.95,
+    new Discounts(
+      [new Discount(
+        'borrelHapjes',
+        1,
+        1.95
+      )]
+    ),
+    'kitchen'
+  );
+  constructor(
+    private coursesService: CoursesService,
+    private orderService: OrderService) { }
 
  
 
   ngOnInit(): void {
-    let filteredArray = this.arrayOfElements
-    .filter((element) => 
-        element.subElements.some((subElement) => subElement.surname === 1))
-    .map(element => {
-        let newElt = Object.assign({}, element); // copies element
-        newElt.subElements = newElt.subElements.filter(subElement => subElement.surname === 1); 
-        return newElt;
-    });
-    console.log(filteredArray);
+    console.log(this.event);
+    this.orderService.completedOrderReady.subscribe(
+      (completedOrder: CompletedOrder) => {
+        this.event = completedOrder;
+        console.log(completedOrder);
+      }
+    );
+  }
+  getCompletedOrder() {
+    this.event = this.orderService.getCompletedOrder()
+    console.log(this.event);
   }
   
 }
