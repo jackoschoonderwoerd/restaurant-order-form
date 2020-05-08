@@ -20,12 +20,14 @@ export class OrderService {
   soepOrders;
   totalMaaltijdDiscountPrice: number;
   totalBorrelhapjesDiscountPrice: number;
-  loadingStatusChanged = new EventEmitter<boolean>();
-  orderStatusChanged = new EventEmitter<void>();
-  orderCancelledSubscription = new EventEmitter<void>();
   borrelDeals: number = 0;
   maaltijdDeals: number = 0;
   deals: number = 0;
+  loadingStatusChanged = new EventEmitter<boolean>();
+  orderStatusChanged = new EventEmitter<void>();
+  orderCancelledSubscription = new EventEmitter<void>();
+  completedOrderReady = new EventEmitter<CompletedOrder>();
+  competedOrderToTest: CompletedOrder;
 
   constructor(
     private http: HttpClient,
@@ -73,20 +75,23 @@ export class OrderService {
     }
     // console.log(this.borrelDeals, this.borrelDeals * discount)
     this.totalBorrelhapjesDiscountPrice = this.borrelDeals * discount;
-    return new Discount('borrelDeals', this.deals, this.borrelDeals * discount);
+    console.log('borrelDeals', this.deals, this.borrelDeals * discount);
+    return new Discount('borrelDeals', this.borrelDeals, this.borrelDeals * discount);
 
   }
 
   postFinalOrder(completedOrder: CompletedOrder) {
+    this.competedOrderToTest = completedOrder;
     const discounts = new Discounts([
       new Discount('maaltijdDeals', this.maaltijdDeals, this.totalMaaltijdDiscountPrice),
       new Discount('borrelDeals', this.borrelDeals, this.totalBorrelhapjesDiscountPrice)
     ]);
     // console.log(discountInfo);
     // console.log(completedOrder);
-    // completedOrder.destination = 'kitchen';
+    completedOrder.destination = 'kitchen';
     completedOrder.discounts = discounts;
     console.log(completedOrder);
+    this.completedOrderReady.emit(completedOrder);
     this.loadingStatusChanged.emit(true);
     this.http.post('https://65qdu0ddyk.execute-api.eu-central-1.amazonaws.com/dev/captein-en-co', completedOrder).subscribe(
       (data => {
@@ -98,12 +103,10 @@ export class OrderService {
             console.log(data);
           })
         );
-        // const parsedData = JSON.stringify(data);
         this.loadingStatusChanged.emit(false);
-        // console.log(parsedData);
         this.orderStatusChanged.emit();
         this.dialog.open(OrderSentDialogComponent);
-        // localStorage.clear();
+        localStorage.clear();
         this.coursesSevice.resetMenu();
         this.router.navigate(['/home']);
       }),
@@ -111,6 +114,11 @@ export class OrderService {
         console.log(err);
       })
     );
+    
+  }
+
+  getCompletedOrder(): CompletedOrder {
+    return this.competedOrderToTest;
   }
 
   storeOrderInfoFormValue(orderFormValue) {

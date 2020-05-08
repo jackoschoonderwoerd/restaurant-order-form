@@ -72,13 +72,9 @@ export class OrderFormComponent implements OnInit {
       localStorage.clear();
       this.customerInfoForm.reset();
     });
-
-
-
     const today = new Date()
     this.minDate = today;
     this.maxDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 6);
-
   }
 
   orderInfoFormChanged() {
@@ -95,6 +91,14 @@ export class OrderFormComponent implements OnInit {
       pickupDate: [null, [Validators.required]],
       pickupTime: [null, [Validators.required]],
       comments: [null]
+      // name: [null],
+      // delivery: ['pickup'],
+      // address: [null],
+      // phone: [null, []],
+      // email: [null],
+      // pickupDate: [null],
+      // pickupTime: [null],
+      // comments: [null]
 
     });
     if (this.orderInfoFormValue) {

@@ -58,6 +58,12 @@ export class OrderComponent implements OnInit {
       this.loadingStatus = loadingStatus;
     });
     console.log(this.discountService.getDiscount());
+    this.orderService.orderStatusChanged.subscribe(
+      () => {
+        this.maaltijdDealsTotalAmount = 0;
+        this.borrelDealsTotalAmount = 0;
+      }
+    );
     this.getOrderTotal();
     this.getMaaltijdDealsTotalPrice();
     this.getBorrelDealsTotalPrice();
