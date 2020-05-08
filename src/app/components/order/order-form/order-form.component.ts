@@ -12,6 +12,8 @@ import { OrderInfo } from 'src/app/models/order-info.model';
 import { CompletedOrder } from 'src/app/models/completed-order.model';
 import { CancelOrderDialogComponent } from './cancel-order-dialog/cancel-order-dialog.component';
 import { Discounts } from 'src/app/models/discounts.model';
+import { BezorgenDialogComponent } from './bezorgen-dialog/bezorgen-dialog.component';
+import { AfhalenDialogComponent } from './afhalen-dialog/afhalen-dialog.component';
 
 @Component({
   selector: 'app-order-form',
@@ -24,7 +26,7 @@ export class OrderFormComponent implements OnInit {
 
   // orders: CoffeeOrder[] = [];
   totalPrice = 0
-  orderInfoForm: FormGroup;
+  customerInfoForm: FormGroup;
   orderInfoFormValue;
   minDate: Date;
   maxDate: Date;
@@ -52,10 +54,14 @@ export class OrderFormComponent implements OnInit {
   }
   ngOnInit(): void {
     this.initForm();
+    this.setUserCategoryValidators();
     if (this.orderService.checkLocalstorageForOrderInfo()) {
       const orderFormInfo = this.orderService.checkLocalstorageForOrderInfo();
-      this.orderInfoForm.patchValue({
+      this.customerInfoForm.patchValue({
         name: orderFormInfo.name,
+        delivery: orderFormInfo.delivery,
+        address: orderFormInfo.address,
+        email: orderFormInfo.email,
         phone: orderFormInfo.phone,
         pickupDate: orderFormInfo.pickupDate,
         pickupTime: orderFormInfo.pickupTime,
@@ -64,7 +70,7 @@ export class OrderFormComponent implements OnInit {
     }
     this.orderService.orderStatusChanged.subscribe(() => {
       localStorage.clear();
-      this.orderInfoForm.reset();
+      this.customerInfoForm.reset();
     });
 
 
@@ -76,32 +82,32 @@ export class OrderFormComponent implements OnInit {
   }
 
   orderInfoFormChanged() {
-    this.orderService.storeOrderInfoFormValue(this.orderInfoForm.value)
+    this.orderService.storeOrderInfoFormValue(this.customerInfoForm.value)
   }
 
   private initForm() {
-    this.orderInfoForm = this.fb.group({
-      // name: new FormControl(null, [Validators.required]),
-      // phone: new FormControl(null),
-      // pickupDate: new FormControl(undefined, [Validators.required]),
-      // pickupTime: new FormControl(null, [Validators.required]),
-      // comments: new FormControl(null)
-
-      name: new FormControl('jacko'),
-      phone: new FormControl(null),
-      email: new FormControl('jackoboes@gmail.com'),
-      pickupDate: new FormControl(undefined),
-      pickupTime: new FormControl(null),
-      comments: new FormControl(null)
+    this.customerInfoForm = this.fb.group({
+      name: [null, [Validators.required, Validators.minLength(3)]],
+      delivery: ['pickup'],
+      address: [null, [Validators.required]],
+      phone: [null, []],
+      email: [null, [Validators.required, Validators.email]],
+      pickupDate: [null, [Validators.required]],
+      pickupTime: [null, [Validators.required]],
+      comments: [null]
 
     });
     if (this.orderInfoFormValue) {
       console.log(this.orderInfoFormValue);
-      this.orderInfoForm.patchValue({
+      this.customerInfoForm.patchValue({
         name: this.orderInfoFormValue.name,
+        delivery: this.orderInfoFormValue.delivery,
+        address: this.orderInfoFormValue.address,
         phone: this.orderInfoFormValue.phone,
+        email: this.orderInfoFormValue.email,
         pickupDate: this.orderInfoFormValue.pickupDate,
         pickupTime: this.orderInfoFormValue.pickupTime,
+        comments: this.orderInfoFormValue.comments
       });
     }
   }
@@ -109,15 +115,17 @@ export class OrderFormComponent implements OnInit {
   sendOrder() {
     const menu = this.coursesService.getMenu('cenc');
     const sortedMenu = this.sortMenu(menu);
-    const orderInfoFormValue = this.orderInfoForm.value;
+    // const orderInfoFormValue = this.orderInfoForm.value;
 
     const orderInfo = new OrderInfo(
-      orderInfoFormValue.name,
-      orderInfoFormValue.phone,
-      orderInfoFormValue.email,
-      orderInfoFormValue.pickupDate,
-      orderInfoFormValue.pickupTime,
-      orderInfoFormValue.comments
+      this.customerInfoForm.value.name,
+      this.customerInfoForm.value.delivery,
+      this.customerInfoForm.value.address,
+      this.customerInfoForm.value.phone,
+      this.customerInfoForm.value.email,
+      this.customerInfoForm.value.pickupDate,
+      this.customerInfoForm.value.pickupTime,
+      this.customerInfoForm.value.comments
     );
     const discounts = new Discounts([])
     const orderTotalPrice = this.coursesService.calculateOrderTotal()
@@ -131,7 +139,7 @@ export class OrderFormComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result){
         localStorage.clear();
-        this.orderInfoForm.reset();
+        this.customerInfoForm.reset();
         this.orderService.cancelOrder();
       }
     });
@@ -150,8 +158,7 @@ export class OrderFormComponent implements OnInit {
   }
 
   private ClearOrder() {
-
-    this.orderInfoForm.reset();
+    this.customerInfoForm.reset();
   }
 
   public onCancelOrder() {
@@ -167,5 +174,28 @@ export class OrderFormComponent implements OnInit {
 
   checkboxChange() {
     console.log('checkboxChange()');
+  }
+  onBezorgen() {
+    this.dialog.open(BezorgenDialogComponent);
+    // console.log('bezxorgen');
+  }
+  onAfhalen() {
+    this.dialog.open(AfhalenDialogComponent);
+  }
+  setUserCategoryValidators() {
+    console.log('setUserCategoryValidators() called')
+    const addressControl = this.customerInfoForm.get('address');
+    this.customerInfoForm.get('delivery').valueChanges.subscribe(
+      (delivery => {
+        console.log(delivery);
+        if (delivery === 'pickup') {
+          addressControl.setValidators(null);
+        }
+        if (delivery === 'dropoff') {
+          addressControl.setValidators([Validators.required]);
+        }
+        addressControl.updateValueAndValidity();
+      })
+    );
   }
 }

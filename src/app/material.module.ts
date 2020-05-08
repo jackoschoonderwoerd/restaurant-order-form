@@ -10,6 +10,8 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import {MatInputModule} from '@angular/material/input';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatRadioModule} from '@angular/material/radio';
 
 
 @NgModule({
@@ -24,7 +26,9 @@ import {MatInputModule} from '@angular/material/input';
     MatDialogModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatInputModule
+    MatInputModule,
+    MatCheckboxModule,
+    MatRadioModule
     
     
   ],
@@ -39,7 +43,9 @@ import {MatInputModule} from '@angular/material/input';
     MatDialogModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatInputModule
+    MatInputModule,
+    MatCheckboxModule,
+    MatRadioModule
     
   ]
 })

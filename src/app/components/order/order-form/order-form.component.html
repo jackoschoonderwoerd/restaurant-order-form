@@ -7,19 +7,55 @@
   <!-- <div class="wrap"> -->
   <mat-card>
     <form
-      [formGroup]="orderInfoForm"
+      [formGroup]="customerInfoForm"
       fxLayout="column"
       fxLayoutAlign="center"
       (ngSubmit)="sendOrder()">
 
-      <mat-form-field>
+      <mat-form-field hintLabel="Ten minste 3 letters">
+        <label for="name"></label>
         <input type="text"
+          id="name"
           matInput
-          placeholder="NAAM"
+          placeholder="NAAM *"
           formControlName="name"
           #nameInput
           (change)="orderInfoFormChanged()">
+          <mat-error>NAAM BESTAAT UIT TEN MINSTE 3 LETTERS</mat-error>
+          <mat-hint align="end">{{nameInput.value?.length}} / 3</mat-hint>
       </mat-form-field>
+
+      <mat-radio-group aria-label="Select an option"
+        formControlName="delivery"
+        color="primary"
+        (change)="orderInfoFormChanged()">
+        <div fxLayout fxLayoutGap="20px" class="">
+          <mat-radio-button
+            (click)="onAfhalen()"
+            value="pickup"
+            [checked]="true">
+            Afhalen
+          </mat-radio-button>
+          <mat-radio-button
+            (click)="onBezorgen()" 
+            value="dropoff">
+            Bezorgen
+            <!-- <mat-icon (click)="onBezorgen()">info</mat-icon> -->
+          </mat-radio-button>
+        </div>
+      </mat-radio-group>
+
+      <!-- <mat-form-field hintLabel="*"> -->
+      <mat-form-field *ngIf="customerInfoForm.get('delivery').value === 'dropoff'">
+        <input type="text"
+          matInput
+          placeholder="ADRES *"
+          formControlName="address"
+          #nameInput
+          (change)="orderInfoFormChanged()">
+          <mat-error>ADRES VERPLICHT BIJ BEZORGEN</mat-error>
+      </mat-form-field>
+
 
       <mat-form-field>
         <input type="text"
@@ -30,11 +66,12 @@
       </mat-form-field>
 
       <mat-form-field>
-        <input type="text"
+        <input type="email"
           matInput placeholder="EMAIL"
           formControlName="email"
           #emailInput
           (change)="orderInfoFormChanged()">
+          <mat-error>GEEN GELDIG EMAIL ADRES</mat-error>
       </mat-form-field>
 
       <mat-form-field>
@@ -43,20 +80,22 @@
           [max]="maxDate"
           [matDatepickerFilter]="myDayFilter"
           [matDatepicker]="picker"
-          placeholder="AFHAALDATUM"
+          placeholder="AFHAALDATUM *"
           formControlName="pickupDate"
           (dateChange)="orderInfoFormChanged()">
         <mat-datepicker-toggle matSuffix [for]="picker">
           <mat-icon matDatepickerToggleIcon>
             <span class="material-icons">
               calendar_today
-            </span></mat-icon>
+            </span>
+          </mat-icon>
         </mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
+        <mat-error>DATUM NIET BESCHIKBAAR</mat-error>
       </mat-form-field>
 
       <mat-form-field>
-        <mat-label>AFHAALTIJDSTIP</mat-label>
+        <mat-label>AFHAALTIJDSTIP *</mat-label>
         <mat-select
           formControlName="pickupTime"
           (selectionChange)="orderInfoFormChanged()">
@@ -72,7 +111,8 @@
         <textarea
           matInput
           placeholder=""
-          formControlName="comments">
+          formControlName="comments"
+          (change)="orderInfoFormChanged()">
         </textarea>
       </mat-form-field>
 
@@ -81,7 +121,7 @@
           class="bestel-button"
           mat-raised-button color="primary"
           type="submit"
-          [disabled]="orderInfoForm.invalid">
+          [disabled]="customerInfoForm.invalid">
           BESTEL
         </button>
         <div class="filler-h-20"></div>
