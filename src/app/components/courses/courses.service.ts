@@ -9,6 +9,7 @@ import { OrderedItem } from 'src/app/models/ordered-item.model';
 import { NewOrderedItem } from 'src/app/models/new-ordered-item.model';
 import { Menu } from 'src/app/models/menu.model';
 import { MenuService } from 'src/app/services/menu.service';
+import { CompanyService } from 'src/app/services/company.service';
 
 
 
@@ -28,11 +29,15 @@ export class CoursesService {
 
   courseNames: string[] = []
 
-  constructor(private menuService: MenuService) { }
+  constructor(
+    private menuService: MenuService,
+    private companyService: CompanyService) { }
 
-  getMenu(cenc) {
+  getMenu() {
     // called by app.component.ts
-    this.menu = this.menuService.getMenu('cenc');
+    this.menu = this.menuService.getMenu();
+    // this.menu = this.companyService.getTestCompany().menu;
+    console.log(this.menu);
     if(localStorage.getItem('orderedItems')) {
       this.orderedItems = JSON.parse(localStorage.getItem('orderedItems'));
       this.menu.courses.forEach(course => {
@@ -123,7 +128,7 @@ export class CoursesService {
   }
   calculateOrderTotal() {
     let total = 0
-    const menu = this.getMenu('');
+    const menu = this.getMenu();
     if(localStorage.getItem('orderedItems')) {
       const orderedItems = JSON.parse(localStorage.getItem('orderedItems'));
       menu.courses.forEach(course => {
@@ -143,7 +148,7 @@ export class CoursesService {
 
   calculateWineBottles() {
     let totalWijn = 0
-    const menu = this.getMenu('');
+    const menu = this.getMenu();
     // if(localStorage.getItem('orderedItems')) {
       menu.courses.forEach(course => {
         if(course.courseName === 'wijn') {
@@ -179,7 +184,7 @@ export class CoursesService {
 
   orderedItemsCount(courseName) {
     let total = 0
-    const menu = this.getMenu('');
+    const menu = this.getMenu();
       menu.courses.forEach(course => {
         if(course.courseName === courseName) {
           const mealsCourse = course;

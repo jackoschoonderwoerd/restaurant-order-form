@@ -86,7 +86,7 @@ export class MenuService {
 
   
 
-  getMenu(companyName) {
+  getMenu() {
     return this.cenc;
   }
   getCourseList(companyName) {

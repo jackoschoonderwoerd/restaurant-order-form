@@ -54,7 +54,7 @@ export class OrderFormComponent implements OnInit {
   }
   ngOnInit(): void {
     this.initForm();
-    this.setUserCategoryValidators();
+    // this.setUserCategoryValidators();
     if (this.orderService.checkLocalstorageForOrderInfo()) {
       const orderFormInfo = this.orderService.checkLocalstorageForOrderInfo();
       this.customerInfoForm.patchValue({
@@ -77,29 +77,43 @@ export class OrderFormComponent implements OnInit {
     this.maxDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 6);
   }
 
-  orderInfoFormChanged() {
-    this.orderService.storeOrderInfoFormValue(this.customerInfoForm.value)
+  orderInfoFormChanged(event) {
+    // console.log(this.customerInfoForm.controls);
+    this.orderService.storeOrderInfoFormValue(this.customerInfoForm.value);
+    console.log(this.customerInfoForm.valid)
+    // this.checkValueChanges();
+    // this.setUserCategoryValidators()
+    // console.log(event.source.change);
+    // console.log(event.source.radioGroup);
+    // if(event.source !== undefined && event.source.name === 'mat-radio-group-0') {
+    //   console.log(event.source.name);
+    //   this.setUserCategoryValidators();
+    //   console.log('MatRadioChange')
+    // } else {
+    //   console.log('NOT MatRadioChange')
+    // }
   }
 
   private initForm() {
     this.customerInfoForm = this.fb.group({
       name: [null, [Validators.required, Validators.minLength(3)]],
       delivery: ['pickup'],
-      address: [null, [Validators.required]],
-      phone: [null, []],
+      address: [null],
+      phone: [null],
       email: [null, [Validators.required, Validators.email]],
       pickupDate: [null, [Validators.required]],
       pickupTime: [null, [Validators.required]],
       comments: [null]
+
+
       // name: [null],
       // delivery: ['pickup'],
       // address: [null],
-      // phone: [null, []],
+      // phone: [null],
       // email: [null],
       // pickupDate: [null],
       // pickupTime: [null],
       // comments: [null]
-
     });
     if (this.orderInfoFormValue) {
       console.log(this.orderInfoFormValue);
@@ -117,9 +131,8 @@ export class OrderFormComponent implements OnInit {
   }
 
   sendOrder() {
-    const menu = this.coursesService.getMenu('cenc');
+    const menu = this.coursesService.getMenu();
     const sortedMenu = this.sortMenu(menu);
-    // const orderInfoFormValue = this.orderInfoForm.value;
 
     const orderInfo = new OrderInfo(
       this.customerInfoForm.value.name,
@@ -143,7 +156,7 @@ export class OrderFormComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result){
         localStorage.clear();
-        this.customerInfoForm.reset();
+        this.initForm();
         this.orderService.cancelOrder();
       }
     });
@@ -180,26 +193,27 @@ export class OrderFormComponent implements OnInit {
     console.log('checkboxChange()');
   }
   onBezorgen() {
+    const addressControl = this.customerInfoForm.get('address');
     this.dialog.open(BezorgenDialogComponent);
-    // console.log('bezxorgen');
+    console.log(addressControl.status);
+    
+    setTimeout(() => {
+      addressControl.setValidators([Validators.required])
+      addressControl.updateValueAndValidity();
+    }), 0.5;
+    console.log(addressControl.status);
   }
   onAfhalen() {
-    this.dialog.open(AfhalenDialogComponent);
-  }
-  setUserCategoryValidators() {
-    console.log('setUserCategoryValidators() called')
     const addressControl = this.customerInfoForm.get('address');
-    this.customerInfoForm.get('delivery').valueChanges.subscribe(
-      (delivery => {
-        console.log(delivery);
-        if (delivery === 'pickup') {
-          addressControl.setValidators(null);
-        }
-        if (delivery === 'dropoff') {
-          addressControl.setValidators([Validators.required]);
-        }
-        addressControl.updateValueAndValidity();
-      })
-    );
+    console.log(addressControl.status);
+    this.dialog.open(AfhalenDialogComponent);
+    
+    setTimeout(() => {
+      addressControl.setValidators(null);
+      addressControl.setValue('');
+      addressControl.updateValueAndValidity();
+    }), 0.5;
+    console.log(addressControl.status)
+    
   }
 }

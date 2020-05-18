@@ -20,7 +20,7 @@
           placeholder="NAAM *"
           formControlName="name"
           #nameInput
-          (change)="orderInfoFormChanged()">
+          (change)="orderInfoFormChanged($event)">
           <mat-error>NAAM BESTAAT UIT TEN MINSTE 3 LETTERS</mat-error>
           <mat-hint align="end">{{nameInput.value?.length}} / 3</mat-hint>
       </mat-form-field>
@@ -28,31 +28,30 @@
       <mat-radio-group aria-label="Select an option"
         formControlName="delivery"
         color="primary"
-        (change)="orderInfoFormChanged()">
+        (change)="orderInfoFormChanged($event)">
         <div fxLayout fxLayoutGap="20px" class="">
           <mat-radio-button
+            id="pickup"
             (click)="onAfhalen()"
-            value="pickup"
-            [checked]="true">
+            value="pickup">
             Afhalen
           </mat-radio-button>
           <mat-radio-button
+            id="dropoff"
             (click)="onBezorgen()" 
             value="dropoff">
             Bezorgen
-            <!-- <mat-icon (click)="onBezorgen()">info</mat-icon> -->
           </mat-radio-button>
         </div>
       </mat-radio-group>
 
-      <!-- <mat-form-field hintLabel="*"> -->
       <mat-form-field *ngIf="customerInfoForm.get('delivery').value === 'dropoff'">
         <input type="text"
           matInput
           placeholder="ADRES *"
           formControlName="address"
           #nameInput
-          (change)="orderInfoFormChanged()">
+          (change)="orderInfoFormChanged($event)">
           <mat-error>ADRES VERPLICHT BIJ BEZORGEN</mat-error>
       </mat-form-field>
 
@@ -62,7 +61,7 @@
           matInput placeholder="TELEFOONNUMMER (opt)"
           formControlName="phone"
           #phoneInput
-          (change)="orderInfoFormChanged()">
+          (change)="orderInfoFormChanged($event)">
       </mat-form-field>
 
       <mat-form-field>
@@ -70,7 +69,7 @@
           matInput placeholder="EMAIL"
           formControlName="email"
           #emailInput
-          (change)="orderInfoFormChanged()">
+          (change)="orderInfoFormChanged($event)">
           <mat-error>GEEN GELDIG EMAIL ADRES</mat-error>
       </mat-form-field>
 
@@ -82,7 +81,7 @@
           [matDatepicker]="picker"
           placeholder="AFHAALDATUM *"
           formControlName="pickupDate"
-          (dateChange)="orderInfoFormChanged()">
+          (dateChange)="orderInfoFormChanged($event)">
         <mat-datepicker-toggle matSuffix [for]="picker">
           <mat-icon matDatepickerToggleIcon>
             <span class="material-icons">
@@ -98,7 +97,7 @@
         <mat-label>AFHAALTIJDSTIP *</mat-label>
         <mat-select
           formControlName="pickupTime"
-          (selectionChange)="orderInfoFormChanged()">
+          (selectionChange)="orderInfoFormChanged($event)">
           <mat-option
             *ngFor="let afhaalMoment of afhaalMomenten" [value]="afhaalMoment">
             {{afhaalMoment}}
@@ -112,7 +111,7 @@
           matInput
           placeholder=""
           formControlName="comments"
-          (change)="orderInfoFormChanged()">
+          (change)="orderInfoFormChanged($event)">
         </textarea>
       </mat-form-field>
 
@@ -121,6 +120,7 @@
           class="bestel-button"
           mat-raised-button color="primary"
           type="submit"
+          
           [disabled]="customerInfoForm.invalid">
           BESTEL
         </button>

@@ -37,7 +37,7 @@ export class CoursesComponent implements OnInit {
 
   ngOnInit(): void {
     const myCourseName = this.route.snapshot.paramMap.get('courseName')
-    this.coursesService.getMenu('cenc');
+    this.coursesService.getMenu();
     this.cdr.detectChanges()
     const courseName = this.route.snapshot.params['courseName']
     this.course = this.coursesService.getCourse(courseName)[0];
@@ -49,7 +49,7 @@ export class CoursesComponent implements OnInit {
       })
     );
     this.orderService.orderStatusChanged.subscribe(() => {
-      this.coursesService.getMenu('cenc');
+      this.coursesService.getMenu();
     })
   }
   onNaarBestellijst() {

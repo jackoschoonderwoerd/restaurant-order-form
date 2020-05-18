@@ -7,9 +7,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NietInGebruikDialogComponent implements OnInit {
 
+
+  companies: string[] = [
+    'testCompanyOne',
+    'testCompanyTwo',
+    'testCompanyThree'
+  ]
+
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  selectCompany(company) {
+    console.log(company);
+  }
 }

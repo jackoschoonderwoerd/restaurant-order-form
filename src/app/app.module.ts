@@ -37,6 +37,7 @@ import { CancelOrderDialogComponent } from './components/order/order-form/cancel
 import { NietInGebruikDialogComponent } from './niet-in-gebruik-dialog/niet-in-gebruik-dialog.component';
 import { BezorgenDialogComponent } from './components/order/order-form/bezorgen-dialog/bezorgen-dialog.component';
 import { AfhalenDialogComponent } from './components/order/order-form/afhalen-dialog/afhalen-dialog.component';
+import { MainComponent } from './components/main/main.component';
 
 
 
@@ -77,6 +78,7 @@ import { AfhalenDialogComponent } from './components/order/order-form/afhalen-di
     NietInGebruikDialogComponent,
     BezorgenDialogComponent,
     AfhalenDialogComponent,
+    MainComponent,
 
 
   ],

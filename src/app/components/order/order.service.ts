@@ -38,8 +38,8 @@ export class OrderService {
   ) { }
 
   getMenu() {
-    console.log(this.coursesSevice.getMenu('cenc'));
-    return this.coursesSevice.getMenu('cenc')
+    console.log(this.coursesSevice.getMenu());
+    return this.coursesSevice.getMenu()
   }
 
   returnMaaltijdDealsTotalPriceAndTotalAmount(orderedMeals, orderedWines) {
@@ -99,8 +99,8 @@ export class OrderService {
         completedOrder.orderInfo.email = data.toString();
         completedOrder.destination = 'customer'
         this.http.post('https://65qdu0ddyk.execute-api.eu-central-1.amazonaws.com/dev/captein-en-co', completedOrder).subscribe(
-          (data => {
-            console.log(data);
+          (customerData => {
+            console.log(customerData);
           })
         );
         this.loadingStatusChanged.emit(false);
